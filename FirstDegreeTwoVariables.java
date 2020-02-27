@@ -24,7 +24,7 @@ public class FirstDegreeTwoVariables{
         if(D != 0)
             JOptionPane.showInternalMessageDialog(null,"He phuong trinh co nghiem duy nhat: (x1,x2) = ("+(D1/D)+","+(D2/D)+")","Ket qua",
             JOptionPane.INFORMATION_MESSAGE);
-        else if(D == D1 && D1 == D2 && D2 == D)
+        else if(D == 0 && D2 == 0)
             JOptionPane.showInternalMessageDialog(null,"He phuong trinh co vo so nghiem","Ket qua",JOptionPane.INFORMATION_MESSAGE);
         else 
             JOptionPane.showInternalMessageDialog(null,"He phuong trinh vo nghiem","Ket qua",JOptionPane.INFORMATION_MESSAGE);
