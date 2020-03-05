@@ -11,9 +11,9 @@ public class FirstDegree{
             JOptionPane.WARNING_MESSAGE);
             a = Double.parseDouble(str1);
         }
-        str2 = JOptionPane.showInputDialog(null,"b = ","Nhập hệ số b",JOptionPane.INFORMATION_MESSAGE);
+        str2 = JOptionPane.showInputDialog(null,"b = ","Nhap vao he so b",JOptionPane.INFORMATION_MESSAGE);
         b = Double.parseDouble(str2);
-        JOptionPane.showInternalMessageDialog(null, "Phương trình có nghiệm là: "+(-b/a),
+        JOptionPane.showInternalMessageDialog(null, "Phuong trinh co nghiem la: "+(-b/a),
         "Kết quả",JOptionPane.INFORMATION_MESSAGE);
         System.exit(0);
     }
