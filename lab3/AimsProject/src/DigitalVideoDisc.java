@@ -50,10 +50,17 @@ public class DigitalVideoDisc {
 	}
 	//title,category,director
 	public DigitalVideoDisc(String  title,String category,String director) {
-		super();
-		this.title = title;
-		this.category = category;
+		this(title,category);
 		this.director = director;
 	}
-	
+	//title, categoru, director, length
+	public DigitalVideoDisc(String title,String category, String director, int length) {
+		this(title, category, director);
+		this.length = length;
+	}
+	//title, category, director, length, cost
+	public DigitalVideoDisc(String title, String category, String director, int length, float cost) {
+		this(title, category, director, length);
+		this.cost = cost;
+	}
 }
