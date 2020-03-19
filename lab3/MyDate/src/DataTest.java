@@ -2,16 +2,18 @@
 public class DataTest {
 	public static void main(String[] args) {
 		//Test Constructor no parameter 
-		MyDate testDate = new MyDate();
-		testDate.print();
+		MyDate test1 = new MyDate();
+		test1.print();
 		
 		//Test Constructor 3 parameter
-		MyDate testDate2 = new MyDate(30, 4, 2019);
-		testDate2.print();
-		
+		MyDate test2 = new MyDate(30, 4, 2019);
+		test2.print();
+		//test constructor string
+		MyDate test3 = new MyDate("August 10 1999");
+		test3.print();
 		//Test constructor enter string from keyboard
-		MyDate testDate3 = new MyDate("");
-		testDate3.print();
+		MyDate test4 = new MyDate("");
+		test4.print();
 		
 		System.exit(0);
 	}

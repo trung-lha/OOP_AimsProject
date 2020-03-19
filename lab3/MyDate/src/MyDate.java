@@ -143,7 +143,7 @@ public class MyDate {
 		if (this.day == 0 || month == 0 || year == 0) {
 			System.out.println("Date is not created");
 		} else {
-			System.out.println("Day: " + this.day + " Month: " + this.month + " Year: " + this.year);
+			System.out.println("Day: " +this.day+ " ---Month: " + this.month + " ---Year: " + this.year);
 		}
 	}
 	
