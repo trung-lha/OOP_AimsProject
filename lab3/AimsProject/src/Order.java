@@ -19,6 +19,12 @@ public class Order {
 		int i=0;
 		for (i=0;i<qtyOrder;i++) {
 			if(itemsOrdered[i] == disc) {
+				if(i == qtyOrder -1){
+					itemsOrdered[i] = null;
+					qtyOrder--;
+					System.out.println("The disc name "+ disc.getTitle()+ " has removed");
+					return;
+				}
 				for(int j = i; j< qtyOrder; j++) {
 					itemsOrdered[j] = itemsOrdered[j+1];
 				}
@@ -30,6 +36,7 @@ public class Order {
 			System.out.println("Cann't find the disc that you want to remove");
 		}
 		else {
+			itemsOrdered[i-1] = null;
 			qtyOrder--;
 			System.out.println("The disc name "+ disc.getTitle()+ " has removed");
 		}
