@@ -1,10 +1,37 @@
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Order {
-	public static final int MAX_NUMBERS_ORDERED = 4;
-	public static final int MAX_LIMITED_ORDERS= 4;
 	private static int nbOrders = 0;
-	int qtyOrder = 0;
+	public static final int MAX_NUMBERS_ORDERED = 10;
+	public static final int MAX_LIMITED_ORDERS= 4;
+	int qtyOrder;
+	private String format_date;
 	private DigitalVideoDisc itemsOrdered[] = new DigitalVideoDisc[MAX_NUMBERS_ORDERED];
+	
+	public void setDateOrdered() {
+		LocalDateTime myDateObj = LocalDateTime.now();
+	    DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+
+	    this.format_date = myDateObj.format(myFormatObj);
+	}
+	public String getDateOrdered() {
+		return this.format_date;
+	}
+	private Order(int u) {
+		this.setDateOrdered();
+		this.qtyOrder = u;
+		this.nbOrders++;
+	}
+
+	public Order() {
+		this(0);
+		if(nbOrders > MAX_LIMITED_ORDERS) {
+			System.out.println("Limited orders");
+			System.exit(0);
+		}
+	}
+	
 	public void addDigitalVideoDisc(DigitalVideoDisc disc) {
 		if(qtyOrder < MAX_NUMBERS_ORDERED) {
 			itemsOrdered[qtyOrder] = disc;
@@ -16,8 +43,6 @@ public class Order {
 			System.exit(0);
 		}
 	}
-	
-	// lab 4
 	public void addDigitalVideoDisc(DigitalVideoDisc[] disc) {
 		int i = 0;
 		if (qtyOrder+disc.length > MAX_NUMBERS_ORDERED) {
@@ -29,9 +54,7 @@ public class Order {
 				i++;
 			}
 		}
-	}
-	
-	
+	}	
 	public void addDigitalVideoDisc(DigitalVideoDisc dvd1, DigitalVideoDisc dvd2) {
 		if(qtyOrder >= MAX_NUMBERS_ORDERED) {
 			System.out.println("Could not add " + dvd1.getTitle() + " and " + dvd2.getTitle());
@@ -49,8 +72,6 @@ public class Order {
 		}
 		
 	}
-	
-	
 	public void removeDigitalVideoDisc(DigitalVideoDisc disc) {
 		int i=0;
 		while (i<qtyOrder) {
@@ -85,5 +106,17 @@ public class Order {
 			total = total+cost;
 		}
 		return total;
+	}
+	public void printOrdered() {
+		float total=0;
+		System.out.println("******************** ORDER *********************");
+		System.out.printf("Date: %s\nOrder Items:\n", this.getDateOrdered());
+		for (int i=0;i<qtyOrder;i++) {
+			System.out.printf("%d. %s-%s-%s-%d-%.2f\n",i+1,itemsOrdered[i].getTitle(),itemsOrdered[i].getCategory()
+					,itemsOrdered[i].getDirector(),itemsOrdered[i].getLength(),itemsOrdered[i].getCost());
+		}
+		total = this.totalCost();
+		System.out.printf("Total cost: %.2f\n",total);
+		System.out.println("************************************************");
 	}
 }
