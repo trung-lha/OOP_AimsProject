@@ -4,35 +4,30 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class DateUtils {
-	public static int compareDate(String a, String b) {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-        Date date1 = null;
-        Date date2 = null;
-
-        try {
-            date1 = dateFormat.parse(a);
-
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            date2 = dateFormat.parse(b);
-
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        assert date1 != null;
-        assert date2 != null;
-        if (date1.compareTo(date2) > 0) {
-            return 1;
-        } else if (date1.compareTo(date2) < 0) {
-            return -1;
-        }
-        return 0;
+	public static int compareDate(String sDate1, String sDate2) {
+		SimpleDateFormat formated = new SimpleDateFormat("dd/MM/yyyy");
+		Date date1=null,date2=null;
+		try {
+			date1 = formated.parse(sDate1);
+			date2 = formated.parse(sDate2);
+		} catch (ParseException e) {
+		    e.printStackTrace();
+		}
+		if(date1 == null || date2 == null) {
+			System.out.println("input string is inValid");
+			return -2;
+		}
+		else {
+			if (date1.compareTo(date2) > 0) {
+				return 1; //date 1 after date 2
+			} else if (date1.compareTo(date2) < 0) {
+				return -1; //date 1 before date 2
+			}
+        return 0; //date 1 same date 2
+		}
     }
-	public static void sortingDate(String[] date) {
+	// sap xep theo trinh tu thoi gian
+	public static void sortDates(String[] date) {
         for (int i = 0; i < date.length - 1; i++) {
             for (int j = i + 1; j < date.length; j++) {
                 if (compareDate(date[i], date[j]) == 1) {

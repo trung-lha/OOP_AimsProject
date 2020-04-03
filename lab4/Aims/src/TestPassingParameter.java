@@ -1,3 +1,4 @@
+import hust.soict.globalict.aims.disc.DigitalVideoDisc.DigitalVideoDisc;
 
 public class TestPassingParameter {
 

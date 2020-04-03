@@ -1,6 +1,8 @@
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import hust.soict.globalict.aims.disc.DigitalVideoDisc.DigitalVideoDisc;
+
 public class Order {
 	private static int nbOrders = 0;
 	public static final int MAX_NUMBERS_ORDERED = 10;

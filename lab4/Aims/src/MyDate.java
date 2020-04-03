@@ -183,76 +183,78 @@ public class MyDate {
         }
 	}
 	
-	
+	// chuyen tu string year sang int year, 
+	//nhung do co qua nhieu cach nhap string nen em chi lam string dang giong het nhu trong slide
 	public int convertStringYear(String year) {
-		boolean isValidInput = true;
+		boolean isValid = false;
 	    int result = 0;
-	    int finalResult = 0;
-	    List<String> allowedStrings = Arrays.asList
-	    (
-	    "zero","one","two","three","four","five","six","seven",
-	    "eight","nine","ten","eleven","twelve","thirteen","fourteen",
-	    "fifteen","sixteen","seventeen","eighteen","nineteen","twenty",
-	    "thirty","forty","fifty","sixty","seventy","eighty","ninety"
-	    );
+	    int resultConvert = 0;
+	    String[] listYear = {"zero","one","two","three","four","five","six","seven",
+	    					"eight","nine","ten","eleven","twelve","thirteen","fourteen",
+	    					"fifteen","sixteen","seventeen","eighteen","nineteen","twenty",
+	    					"thirty","forty","fifty","sixty","seventy","eighty","ninety"
+	    					};
 
-	    if(year != null && year.length()> 0)
+	    if(year != null)
 	    {
-	        year = year.toLowerCase().replaceAll(" and", " ");
+	        year = year.toLowerCase();
 	        String[] splitted = year.trim().split("\\s");
 
 	        for(String str : splitted)
 	        {
-	            if(!allowedStrings.contains(str))
-	            {
-	                isValidInput = false;
-	                System.out.println("Invalid word found : "+str);
-	                break;
+	            for(int i = 0;i<listYear.length;i++) {
+	            	if(str.equalsIgnoreCase(listYear[i])) {
+	            		isValid = true;
+	            		break;
+	            	}
 	            }
+	            if(isValid == false) {
+	            	System.out.println("Input is inValid.");
+	            	break;
+	            }
+	            
 	        }
-	        if(isValidInput)
+	        if(isValid)
 	        {	
+	        	// chuyen hang nghin
 	        	switch(splitted[0]) {
 	        		case "ten":
-	        			finalResult = 1000;
+	        			resultConvert = 1000;
 	        			break;
 	        		case "eleven":
-	        			finalResult = 1100;
+	        			resultConvert = 1100;
 	        			break;
 	        		case "twelve":
-	        			finalResult = 1200;
+	        			resultConvert = 1200;
 	        			break;
 	        		case "thirteen":
-	        			finalResult = 1300;
+	        			resultConvert = 1300;
 	        			break;
 	        		case "fourteen":
-	        			finalResult = 1400;
+	        			resultConvert = 1400;
 	        			break;
 	        		case "fifteen":
-	        			finalResult = 1500;
+	        			resultConvert = 1500;
 	        			break;
 	        		case "sixteen":
-	        			finalResult = 1600;
+	        			resultConvert = 1600;
 	        			break;
 	        		case "seventeen":
-	        			finalResult = 1700;
+	        			resultConvert = 1700;
 	        			break;
 	        		case "eighteen":
-	        			finalResult = 1800;
+	        			resultConvert = 1800;
 	        			break;
 	        		case "nineteen":
-	        			finalResult = 1900;
+	        			resultConvert = 1900;
 	        			break;
 	        		case "twenty":
-	        			finalResult = 2000;
-	        			break;
-	        		case "thirty":
-	        			finalResult = 3000;
+	        			resultConvert = 2000;
 	        			break;
 	        		default:
 						System.out.println("String of year is wrong");
 	        	}
-	        	
+	        	//chuyen hang chuc va don vi
 	            for(int i = 1; i < splitted.length; i++)
 	            {	
 	            	String str = splitted[i];
@@ -339,11 +341,11 @@ public class MyDate {
 	                }
 	            }
 
-	            finalResult += result;
+	            resultConvert += result;
 	            result=0;
 	        }
 	    }
-	    return finalResult;
+	    return resultConvert;
 	}
 	public void print() {
 		if(day == 0 || month == 0 || year == 0) {
@@ -353,11 +355,14 @@ public class MyDate {
 			String str;
 			if(day == 1) {
 				str = Integer.toString(day) + "st";
-			}else if(day == 2) {
+			}
+			else if(day == 2) {
 				str = Integer.toString(day) + "nd";
-			}else if(day == 3) {
+			}
+			else if(day == 3) {
 				str = Integer.toString(day) + "rd";
-			}else {
+			}
+			else {
 				str = Integer.toString(day) + "th";
 			}
 			System.out.printf("%s %s %d %n", strMonth[getMonth() - 1],str, getYear());
