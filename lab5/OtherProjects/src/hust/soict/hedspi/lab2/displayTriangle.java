@@ -1,5 +1,6 @@
+package hust.soict.hedspi.lab2;
 import java.util.Scanner;
-public class Ex5_4 {
+public class displayTriangle {
 	public static void main(String[] args) {
 		Scanner keyboard = new Scanner(System.in);
 		System.out.print("Enter height of triangle: ");

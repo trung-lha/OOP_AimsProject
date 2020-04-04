@@ -1,8 +1,12 @@
+package hust.soict.hedspi.test.utils;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+
+import hust.soict.hedspi.aims.utils.DateUtils;
+import hust.soict.hedspi.aims.utils.MyDate;
 
 public class DateTest {
 	public static void main(String[] args) {

@@ -1,4 +1,7 @@
-import hust.soict.globalict.aims.disc.DigitalVideoDisc.DigitalVideoDisc;
+package hust.soict.hedspi.aims;
+import hust.soict.hedspi.aims.disc.DigitalVideoDisc;
+import hust.soict.hedspi.aims.order.Order;
+import hust.soict.hedspi.aims.utils.MyDate;
 
 public class Aims {
 	public static void main(String[] args){
@@ -16,7 +19,7 @@ public class Aims {
 		order2.addDigitalVideoDisc(listdvd);
 	
 		order2.removeDigitalVideoDisc(dvd4);
-		System.out.print(order2.qtyOrder);
+		
 		DigitalVideoDisc dvd6 = new DigitalVideoDisc("disk 6");
 		DigitalVideoDisc dvd5 = new DigitalVideoDisc("disk 5");
 		order2.addDigitalVideoDisc(dvd5, dvd6);

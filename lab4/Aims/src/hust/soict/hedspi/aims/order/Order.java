@@ -1,7 +1,8 @@
+package hust.soict.hedspi.aims.order;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-import hust.soict.globalict.aims.disc.DigitalVideoDisc.DigitalVideoDisc;
+import hust.soict.hedspi.aims.disc.DigitalVideoDisc;
 
 public class Order {
 	private static int nbOrders = 0;

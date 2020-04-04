@@ -1,3 +1,4 @@
+package hust.soict.hedspi.aims.utils;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.text.ParseException;
