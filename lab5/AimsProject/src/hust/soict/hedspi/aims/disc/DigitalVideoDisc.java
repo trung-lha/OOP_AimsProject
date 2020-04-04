@@ -64,5 +64,20 @@ public class DigitalVideoDisc {
 		this(title, category, director, length);
 		this.cost = cost;
 	}
+	
+	//find out the corresponding disk of the current object contains the title
+	public boolean search(String title) {
+		int check = 0;
+		title = title.toLowerCase().trim();
+		String titleCurrentObj = this.title.toLowerCase().trim();
+		String[] words = title.split("\\s");
+		for(int i = 0;i< words.length;i++) {
+			if(titleCurrentObj.contains(words[i]))
+				check++;
+		}
+		if(check == words.length) 
+			return true;
+		else return false;
+	}
 
 }

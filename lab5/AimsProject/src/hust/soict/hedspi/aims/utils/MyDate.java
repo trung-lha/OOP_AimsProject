@@ -1,10 +1,8 @@
 package hust.soict.hedspi.aims.utils;
-import java.util.Arrays;
-import java.util.Calendar;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.Scanner;
 
 public class MyDate {

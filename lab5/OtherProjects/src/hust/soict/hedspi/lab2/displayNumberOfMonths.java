@@ -1,5 +1,4 @@
 package hust.soict.hedspi.lab2;
-import javax.swing.JOptionPane;
 import java.util.Scanner;
 public class displayNumberOfMonths {
 	public static void main(String[] args) {

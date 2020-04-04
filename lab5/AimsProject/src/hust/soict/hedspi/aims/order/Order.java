@@ -9,6 +9,7 @@ public class Order {
 	public static final int MAX_NUMBERS_ORDERED = 10;
 	public static final int MAX_LIMITED_ORDERS= 4;
 	int qtyOrder;
+	int luckyNumber;
 	private String format_date;
 	private DigitalVideoDisc itemsOrdered[] = new DigitalVideoDisc[MAX_NUMBERS_ORDERED];
 	
@@ -51,6 +52,7 @@ public class Order {
 		if (qtyOrder+disc.length > MAX_NUMBERS_ORDERED) {
 			System.out.println("list disc full");
 			System.out.printf("only has %d slots\n",MAX_NUMBERS_ORDERED-qtyOrder);
+			System.exit(0);
 		} else {
 			while (qtyOrder < MAX_NUMBERS_ORDERED && i < disc.length ) {
 				addDigitalVideoDisc(disc[i]);
@@ -61,10 +63,12 @@ public class Order {
 	public void addDigitalVideoDisc(DigitalVideoDisc dvd1, DigitalVideoDisc dvd2) {
 		if(qtyOrder >= MAX_NUMBERS_ORDERED) {
 			System.out.println("Could not add " + dvd1.getTitle() + " and " + dvd2.getTitle());
+			System.exit(0);
 		}
 		else if (qtyOrder + 1 == MAX_NUMBERS_ORDERED) {
 			itemsOrdered[qtyOrder++] = dvd1;
 			System.out.println("Could not add " +  dvd2.getTitle());
+			System.exit(0);
 		}
 		else {
 			itemsOrdered[qtyOrder] = dvd1;
@@ -108,7 +112,7 @@ public class Order {
 			cost = itemsOrdered[i].getCost();
 			total = total+cost;
 		}
-		return total;
+		return total - itemsOrdered[luckyNumber].getCost();
 	}
 	public void printOrdered() {
 		float total=0;
@@ -118,8 +122,14 @@ public class Order {
 			System.out.printf("%d. %s-%s-%s-%d-%.2f\n",i+1,itemsOrdered[i].getTitle(),itemsOrdered[i].getCategory()
 					,itemsOrdered[i].getDirector(),itemsOrdered[i].getLength(),itemsOrdered[i].getCost());
 		}
+		System.out.printf("The title of disk free is: %d.%s\n",luckyNumber+1,itemsOrdered[luckyNumber].getTitle());
 		total = this.totalCost();
 		System.out.printf("Total cost: %.2f\n",total);
 		System.out.println("************************************************");
+	}
+	
+	public DigitalVideoDisc getALuckyItem() {
+		luckyNumber = 0 + (int)(Math.random()*(qtyOrder-1));
+		return itemsOrdered[luckyNumber];
 	}
 }
