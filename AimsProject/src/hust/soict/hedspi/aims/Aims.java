@@ -1,5 +1,5 @@
 package hust.soict.hedspi.aims;
-import hust.soict.hedspi.aims.disc.DigitalVideoDisc;
+import hust.soict.hedspi.aims.media.DigitalVideoDisc;
 import hust.soict.hedspi.aims.order.Order;
 
 public class Aims {
@@ -16,14 +16,14 @@ public class Aims {
 		Order order3 = new Order();
 		Order order4 = new Order();
 
-		Order order5 = new Order(); //test limited orders
+		//Order order5 = new Order(); //test limited orders
 		
-		order2.addDigitalVideoDisc(listdvd);
-	
-		order2.removeDigitalVideoDisc(dvd4);
+		order2.addMedia(listdvd);
+		order2.removeMedia(dvd4);
+		order2.printOrdered();
 		
 		DigitalVideoDisc dvd6 = new DigitalVideoDisc("disk 6");
 		DigitalVideoDisc dvd5 = new DigitalVideoDisc("disk 5");
-		order2.addDigitalVideoDisc(dvd5, dvd6);
+//		order2.addMedia(dvd5, dvd6);
 	}
 }
