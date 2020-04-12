@@ -1,6 +1,6 @@
 package hust.soict.hedspi.aims;
 
-import hust.soict.hedspi.aims.disc.DigitalVideoDisc;
+import hust.soict.hedspi.aims.media.DigitalVideoDisc;
 import hust.soict.hedspi.aims.order.Order;
 
 public class DiskTest {
@@ -13,7 +13,7 @@ public class DiskTest {
 		DigitalVideoDisc dvd5 = new DigitalVideoDisc("disk 2","Lion king","unknow",23,23f);
 		DigitalVideoDisc[] listDVD = {dvd1,dvd2,dvd3,dvd4,dvd5};
 		Order order = new Order();
-		order.addDigitalVideoDisc(listDVD);
+		order.addMedia(listDVD);
 		
 		System.out.println("test search(title)");
 		System.out.println(dvd1.search("harry potter"));
