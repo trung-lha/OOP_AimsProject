@@ -22,8 +22,16 @@ public class Media {
 	public void setCost(float cost) {
 		this.cost = cost;
 	}
-	public Media() {
-		// TODO Auto-generated constructor stub
+	public Media(String title) {
+		this.title = title;
+	}
+	public Media(String title,String category) {
+		this(title);
+		this.category = category;
+	}
+	public Media(String title,String category,float cost) {
+		this(title,category);
+		this.cost = cost;
 	}
 
 }

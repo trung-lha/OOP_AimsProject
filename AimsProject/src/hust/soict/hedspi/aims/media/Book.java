@@ -1,16 +1,22 @@
 package hust.soict.hedspi.aims.media;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Book extends Media{
 	private List<String> authors = new ArrayList<String>();
-	public Book() {
-		authors = null;
+	public Book(String title) {
+		super(title);
 	}
-	public Book(String[] listAuthors) {
-		authors = Arrays.asList(listAuthors);
+	public Book(String title,String category) {
+		super(title,category);
+	}
+	public Book(String title,String category,float cost) {
+		super(title,category,cost);
+	}
+	public Book(String title,String category,List<String> authors) {
+		super(title,category);
+		this.authors = authors;
 	}
 	public void addAuthor(String authorName) {
 		if(authors.contains(authorName)) {
