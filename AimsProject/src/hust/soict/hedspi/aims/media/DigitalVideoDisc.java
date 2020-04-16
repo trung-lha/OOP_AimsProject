@@ -39,6 +39,11 @@ public class DigitalVideoDisc extends Media{
 		this.cost = cost;
 	}
 	
+	public DigitalVideoDisc(int id,String title, String category, String director, int length, float cost) {
+		super(id,title,category,cost);
+		this.length = length;
+		this.director = director;
+	}
 	//find out the corresponding disk of the current object contains the title
 	public boolean search(String title) {
 		int check = 0;

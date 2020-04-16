@@ -18,6 +18,10 @@ public class Book extends Media{
 		super(title,category);
 		this.authors = authors;
 	}
+	public Book(int id,String title, String category,float cost, List<String> authors) {
+		super(id,title,category,cost);
+		this.authors = authors;
+	}
 	public void addAuthor(String authorName) {
 		if(authors.contains(authorName)) {
 			System.out.println("The "+authorName+" is already exists in list");

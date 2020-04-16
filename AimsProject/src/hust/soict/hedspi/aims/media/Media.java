@@ -4,6 +4,13 @@ public class Media {
 	protected String title;
 	protected String category;
 	protected float cost;
+	protected int id;
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public String getTitle() {
 		return title;
 	}
@@ -22,16 +29,23 @@ public class Media {
 	public void setCost(float cost) {
 		this.cost = cost;
 	}
+	public Media(int id) {
+		this.setId(id);
+	}
 	public Media(String title) {
-		this.title = title;
+		this.setTitle(title);
 	}
 	public Media(String title,String category) {
 		this(title);
-		this.category = category;
+		this.setCategory(category);
 	}
 	public Media(String title,String category,float cost) {
 		this(title,category);
-		this.cost = cost;
+		this.setCost(cost);
+	}
+	public Media(int id,String title,String category,float cost) {
+		this(title,category,cost);
+		setId(id);
 	}
 
 }
