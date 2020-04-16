@@ -11,7 +11,7 @@ import hust.soict.hedspi.aims.media.Media;
 public class Order {
 	private ArrayList<Media> itemsOrdered = new ArrayList<Media>();
 	private static int nbOrders = 0;
-	public static final int MAX_LIMITED_ORDERS= 10;
+	public static final int MAX_LIMITED_ORDERS= 3;
 	int luckyNumber = -1;
 	private String format_date;
 	public void setDateOrdered() {
@@ -31,7 +31,7 @@ public class Order {
 		this(1);
 		if(nbOrders > MAX_LIMITED_ORDERS) {
 			System.out.println("Order was full");
-			System.exit(0);
+			return;
 		}
 	}
 	public void addMedia(DigitalVideoDisc[] disc) {
@@ -50,17 +50,36 @@ public class Order {
 	public void removeMedia(DigitalVideoDisc disc) {
 		if(!itemsOrdered.contains(disc)) {
 			System.out.println("The disc name "+disc.getTitle()+" is not exist");
-			System.exit(0);
+			return;
 		}
 		else {
 			itemsOrdered.remove(disc);
 			System.out.println("The disc name "+disc.getTitle()+" has removed");
 		}
 	}
+	public void removeMedia(int id) {
+		int check_exist = 0;
+		int target = 0;
+		for(Media media: itemsOrdered) {
+			if(media.getId() == id) {
+				check_exist = 1;
+				break;
+			}
+			target++;
+		}
+		if(check_exist == 0) {
+			System.out.println("Id of item is not exist");
+			return;
+		}
+		else {
+			itemsOrdered.remove(target);
+			System.out.printf("The item has id %d has been Deleted\n",id);
+		}
+	}
 	public void removeMedia(Book book) {
 		if(!itemsOrdered.contains(book)) {
 			System.out.println("The book name "+book.getTitle()+" is not exist");
-			System.exit(0);
+			return;
 		}
 		else {
 			itemsOrdered.remove(book);
@@ -83,10 +102,15 @@ public class Order {
 	}
 	public void printOrdered() {
 		float total=0;
+		if(nbOrders == 0) {
+			System.out.println("itemsOrder is empty");
+			return;
+		}
+		else {
 		System.out.println("******************** ORDER *********************");
 		System.out.printf("Date: %s\nOrder Items:\n", this.getDateOrdered());
 		for (int i=0;i<itemsOrdered.size();i++) {
-			System.out.printf("%d. %s-%s-%.2f\n",i+1,itemsOrdered.get(i).getTitle(),
+			System.out.printf("%d. %s-%s-%.2f\n",itemsOrdered.get(i).getId(),itemsOrdered.get(i).getTitle(),
 					itemsOrdered.get(i).getCategory(),itemsOrdered.get(i).getCost());
 		}
 		if(luckyNumber != -1) {
@@ -99,6 +123,7 @@ public class Order {
 		total = this.totalCost();
 		System.out.printf("Total cost: %.2f\n",total);
 		System.out.println("************************************************");
+		}
 	}
 	
 	public Media getALuckyItem() {
