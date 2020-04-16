@@ -17,18 +17,15 @@ public class DigitalVideoDisc extends Media{
 	}
 	// constructor tittle
 	public DigitalVideoDisc(String title) {
-		super();
-		this.title = title;
+		super(title);
 	}
 	//constructor title and category
 	public DigitalVideoDisc(String  title,String category) {
-		super();
-		this.title = title;
-		this.category = category;
+		super(title,category);
 	}
 	//title,category,director
 	public DigitalVideoDisc(String  title,String category,String director) {
-		this(title,category);
+		super(title,category);
 		this.director = director;
 	}
 	//title, categoru, director, length
@@ -42,6 +39,11 @@ public class DigitalVideoDisc extends Media{
 		this.cost = cost;
 	}
 	
+	public DigitalVideoDisc(int id,String title, String category, String director, int length, float cost) {
+		super(id,title,category,cost);
+		this.length = length;
+		this.director = director;
+	}
 	//find out the corresponding disk of the current object contains the title
 	public boolean search(String title) {
 		int check = 0;
