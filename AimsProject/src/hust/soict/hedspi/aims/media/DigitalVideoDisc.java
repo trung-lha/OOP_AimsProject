@@ -28,7 +28,7 @@ public class DigitalVideoDisc extends Media{
 		super(id,title,category);
 		this.director = director;
 	}
-	//title, categoru, director, length
+	//constructor full
 	public DigitalVideoDisc(int id,String title,String category,String director,int length,float cost) {
 		super(id,title, category, cost);
 		this.director = director;
