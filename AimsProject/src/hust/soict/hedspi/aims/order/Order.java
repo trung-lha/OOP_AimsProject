@@ -13,7 +13,11 @@ public class Order {
 	private static int nbOrders = 0;
 	public static final int MAX_LIMITED_ORDERS= 3;
 	int luckyNumber = -1;
+	private int idOrder = 0;
 	private String format_date;
+	public int getId() {
+		return idOrder;
+	}
 	public void setDateOrdered() {
 		LocalDateTime myDateObj = LocalDateTime.now();
 	    DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
@@ -24,7 +28,8 @@ public class Order {
 		return this.format_date;
 	}
 	private Order(int n) {
-		this.nbOrders += n;
+		this.nbOrders += 1;
+		this.idOrder += n;
 		this.setDateOrdered();
 	}
 	public Order() {

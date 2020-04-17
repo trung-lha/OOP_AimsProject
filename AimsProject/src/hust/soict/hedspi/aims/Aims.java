@@ -1,5 +1,6 @@
 package hust.soict.hedspi.aims;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 import java.util.List;
@@ -44,7 +45,7 @@ public class Aims {
 		ArrayList<Order> listOrder = new ArrayList<Order>();
 		
 		while(true) {
-			System.out.println("Enter a number");
+			System.out.print("Enter a number of feature: ");
 			Scanner sc = new Scanner(System.in);
 			int number = sc.nextInt();
 			switch(number) {
@@ -56,15 +57,72 @@ public class Aims {
 				listOrder.add(new_order);
 				break;
 			case 2:
-				DigitalVideoDisc dvd1 = new DigitalVideoDisc(1,"sieu nhan","thieu nhi","nhat ban",90,90f);
-				List<String> authorsOfBook1 = new ArrayList<String>();
-				authorsOfBook1.add("JK Rowling");
-				Book book1 = new Book(2,"Harry Potter Part 1","Magic",120f,authorsOfBook1);
-				Book book2 = new Book(3,"Harry Potter Part 2","Magic",140f,authorsOfBook1);
-				DigitalVideoDisc[] dvd = {dvd1};
-				Book[] book = {book1,book2};
-				listOrder.get(0).addMedia(dvd);
-				listOrder.get(0).addMedia(book);
+				Scanner scCase2 = new Scanner(System.in);
+				System.out.print("Choose id of Order which want to add: ");
+				int idForOrder = scCase2.nextInt();
+				idForOrder = idForOrder - 1;
+				if(idForOrder+1 > listOrder.size()) {
+					System.out.printf("The Order has id: %d is not exist\n",idForOrder+1);
+					break;
+				}
+				else {
+					int option = 0;
+					while(option != 3) {
+					System.out.printf("1.Add book\n2. Add Video Disc\n3. Exit feature 2\n");
+					System.out.printf("Enter the option of feature 2: ");
+					option = scCase2.nextInt();
+					switch(option) {
+					case 1:
+//					Scanner scOption1 = new Scanner(System.in);
+						scCase2.nextLine();
+						System.out.print("Enter the id of book: ");
+						int idBook = scCase2.nextInt();
+						scCase2.nextLine();
+						System.out.print("Enter the title of book: ");
+						String titleBook = scCase2.nextLine();
+						System.out.print("Enter the category of book:");
+						String categoryBook = scCase2.nextLine();
+						System.out.print("Enter the cost of book:");
+						float costBook = scCase2.nextFloat();
+						scCase2.nextLine();
+						System.out.print("Enter the list authors (like: HoangThiMai TranVanA): ");
+						String strAuthors = scCase2.nextLine();
+						Book book = new Book(idBook,titleBook,categoryBook,costBook);
+						String[] listStrAuthors = strAuthors.split("\\s");
+						for(String author : listStrAuthors) {
+						book.addAuthor(author);
+						}
+						Book[] listBook = {book};
+						listOrder.get(idForOrder).addMedia(listBook);
+						break;
+					case 2:
+						scCase2.nextLine();
+						System.out.print("Enter the id of Disc: ");
+						int idDisc = scCase2.nextInt();
+						scCase2.nextLine();
+						System.out.printf("Enter the title of disc: ");
+						String titleDisc = scCase2.nextLine();
+						System.out.printf("Enter the category of disc:");
+						String categoryDisc = scCase2.nextLine();
+						System.out.printf("Enter the cost of disc:");
+						float costDisc = scCase2.nextFloat();
+						scCase2.nextLine();
+						System.out.printf("Enter the Director of disc:");
+						String director = scCase2.nextLine();
+						System.out.printf("Enter the cost of length:");
+						int length = scCase2.nextInt();
+						DigitalVideoDisc addDisc = new DigitalVideoDisc(idDisc,titleDisc,categoryDisc,director,length,costDisc);
+						DigitalVideoDisc[] listDisc = {addDisc};
+						listOrder.get(idForOrder).addMedia(listDisc);
+						break;
+					case 3:
+						break;
+					default:
+						System.out.println("Number of option is wrong. Enter Again!");
+						break;
+					}
+				}
+				}
 				break;
 			case 3:
 				System.out.printf("Enter item id: ");
@@ -73,7 +131,11 @@ public class Aims {
 				listOrder.get(0).removeMedia(id);
 				break;
 			case 4:
-				listOrder.get(0).printOrdered();
+				sc.nextLine();
+				System.out.print("choose number of Order");
+				int numberOrder = sc.nextInt();
+				sc.nextLine();
+				listOrder.get(numberOrder).printOrdered();
 				break;
 			
 			default:
