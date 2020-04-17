@@ -20,30 +20,26 @@ public class DigitalVideoDisc extends Media{
 		super(title);
 	}
 	//constructor title and category
-	public DigitalVideoDisc(String  title,String category) {
-		super(title,category);
+	public DigitalVideoDisc(int id,String  title,String category) {
+		super(id,title,category);
 	}
 	//title,category,director
-	public DigitalVideoDisc(String  title,String category,String director) {
-		super(title,category);
+	public DigitalVideoDisc(int id,String  title,String category,String director) {
+		super(id,title,category);
 		this.director = director;
 	}
-	//title, categoru, director, length
-	public DigitalVideoDisc(String title,String category, String director, int length) {
-		this(title, category, director);
+	//constructor full
+	public DigitalVideoDisc(int id,String title,String category,String director,int length,float cost) {
+		super(id,title, category, cost);
+		this.director = director;
 		this.length = length;
 	}
-	//title, category, director, length, cost
-	public DigitalVideoDisc(String title, String category, String director, int length, float cost) {
-		this(title, category, director, length);
-		this.cost = cost;
+	public DigitalVideoDisc(String title,String category,String director,int length,float cost) {
+		super(title, category, cost);
+		this.director = director;
+		this.length = length;
 	}
 	
-	public DigitalVideoDisc(int id,String title, String category, String director, int length, float cost) {
-		super(id,title,category,cost);
-		this.length = length;
-		this.director = director;
-	}
 	//find out the corresponding disk of the current object contains the title
 	public boolean search(String title) {
 		int check = 0;

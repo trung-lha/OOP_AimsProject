@@ -10,8 +10,6 @@ import hust.soict.hedspi.aims.media.Media;
 
 public class Order {
 	private ArrayList<Media> itemsOrdered = new ArrayList<Media>();
-	private static int nbOrders = 0;
-	public static final int MAX_LIMITED_ORDERS= 3;
 	int luckyNumber = -1;
 	private String format_date;
 	public void setDateOrdered() {
@@ -23,38 +21,33 @@ public class Order {
 	public String getDateOrdered() {
 		return this.format_date;
 	}
-	private Order(int n) {
-		this.nbOrders += n;
+	public Order() {
 		this.setDateOrdered();
 	}
-	public Order() {
-		this(1);
-		if(nbOrders > MAX_LIMITED_ORDERS) {
-			System.out.println("Order was full");
-			return;
+	public boolean checkIdMedia(Media media) {
+		for(Media md : itemsOrdered) {
+			if(md.getId() == media.getId())
+				return true;
 		}
+		return false;
 	}
-	public void addMedia(DigitalVideoDisc[] disc) {
-//		itemsOrdered = Arrays.asList(disc);
-		for(int i=0; i < disc.length ; i++) {
-			itemsOrdered.add(disc[i]);
-		}
-		System.out.println("The disc list has been added");
-	}
-	public void addMedia(Book[] book) {
-		for(int i=0; i < book.length ; i++) {
-			itemsOrdered.add(book[i]);
-		}
-		System.out.println("The book list has been added");
-	}
-	public void removeMedia(DigitalVideoDisc disc) {
-		if(!itemsOrdered.contains(disc)) {
-			System.out.println("The disc name "+disc.getTitle()+" is not exist");
+	public void addMedia(Media media) {
+		if(checkIdMedia(media)) {
+			System.err.println("The media name "+media.getTitle()+" is exist");
 			return;
 		}
 		else {
-			itemsOrdered.remove(disc);
-			System.out.println("The disc name "+disc.getTitle()+" has removed");
+			itemsOrdered.add(media);
+		}
+	}
+	public void removeMedia(Media media) {
+		if(!checkIdMedia(media)) {
+			System.err.println("The disc name "+media.getTitle()+" is not exist");
+			return;
+		}
+		else {
+			itemsOrdered.remove(media);
+			System.out.println("The disc name "+media.getTitle()+" has removed");
 		}
 	}
 	public void removeMedia(int id) {
@@ -76,16 +69,7 @@ public class Order {
 			System.out.printf("The item has id %d has been Deleted\n",id);
 		}
 	}
-	public void removeMedia(Book book) {
-		if(!itemsOrdered.contains(book)) {
-			System.out.println("The book name "+book.getTitle()+" is not exist");
-			return;
-		}
-		else {
-			itemsOrdered.remove(book);
-			System.out.println("The book name "+book.getTitle()+" has removed");
-		}
-	}
+	
 	public float totalCost(){
 		int i;
 		float total = 0,cost;
@@ -102,7 +86,7 @@ public class Order {
 	}
 	public void printOrdered() {
 		float total=0;
-		if(nbOrders == 0) {
+		if(itemsOrdered.size() == 0) {
 			System.out.println("itemsOrder is empty");
 			return;
 		}

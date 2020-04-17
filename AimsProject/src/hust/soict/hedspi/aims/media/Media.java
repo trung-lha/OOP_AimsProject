@@ -29,23 +29,25 @@ public class Media {
 	public void setCost(float cost) {
 		this.cost = cost;
 	}
-	public Media(int id) {
-		this.setId(id);
-	}
 	public Media(String title) {
 		this.setTitle(title);
 	}
 	public Media(String title,String category) {
-		this(title);
+		this.setTitle(title);
 		this.setCategory(category);
 	}
-	public Media(String title,String category,float cost) {
+	public Media(int id,String title,String category) {
 		this(title,category);
-		this.setCost(cost);
+		this.setId(id);
 	}
 	public Media(int id,String title,String category,float cost) {
-		this(title,category,cost);
-		setId(id);
+		this(id,title,category);
+		this.setCost(cost);
+	}
+	public Media(String title,String category,float cost) {
+		this.setCategory(category);
+		this.setTitle(title);
+		this.setCost(cost);
 	}
 
 }
