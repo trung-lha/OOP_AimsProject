@@ -11,12 +11,9 @@ public class Book extends Media{
 	}
 	public Book(int id,String title,String category,float cost) {
 		super(title,category,cost);
-		this.setId(id);
+		this.id = id;
 	}
-	public Book(String title,String category,List<String> authors) {
-		super(title,category);
-		this.authors = authors;
-	}
+	
 	public Book(String title, String category,float cost, List<String> authors) {
 		super(title,category,cost);
 		this.authors = authors;
