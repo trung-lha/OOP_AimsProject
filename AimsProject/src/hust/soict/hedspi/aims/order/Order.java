@@ -28,23 +28,24 @@ public class Order {
 		}
 		return false;
 	}
-	public void addMedia(Media media) {
+	public int addMedia(Media media) {
 		if(checkIdMedia(media)) {
-			System.err.println("The media name "+media.getTitle()+" is exist");
-			return;
+			System.err.println("The media has ID is "+media.getId()+" is exist");
+			return 0;
 		}
 		else {
 			itemsOrdered.add(media);
+			return 1;
 		}
 	}
 	public void removeMedia(Media media) {
 		if(!checkIdMedia(media)) {
-			System.err.println("The disc name "+media.getTitle()+" is not exist");
+			System.err.println("The media has ID is "+media.getId()+" is not exist");
 			return;
 		}
 		else {
 			itemsOrdered.remove(media);
-			System.out.println("The disc name "+media.getTitle()+" has removed");
+			System.out.println("The media has ID is "+media.getId()+" is exist");
 		}
 	}
 	public void removeMedia(int id) {
@@ -58,7 +59,7 @@ public class Order {
 			target++;
 		}
 		if(check_exist == 0) {
-			System.out.println("Id of item is not exist");
+			System.err.println("Id of item is not exist");
 			return;
 		}
 		else {

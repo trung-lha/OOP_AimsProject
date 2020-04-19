@@ -10,9 +10,10 @@ import hust.soict.hedspi.aims.order.Order;
 
 public class Aims {
 	public static void main(String[] args){
-		showMenu();
+		ArrayList<Order> orders = new ArrayList<Order>();
+		showMenu(orders);
 	}
-	public static void showMenu() {
+	public static void showMenu(ArrayList<Order> listOrder) {
 		System.out.println("Order Management Application: ");
 		System.out.println("--------------------------------");
 		System.out.println("1. Create new order");
@@ -22,7 +23,6 @@ public class Aims {
 		System.out.println("0. Exit");
 		System.out.println("--------------------------------");
 		System.out.println("Please choose a number: 0-1-2-3-4");
-		ArrayList<Order> listOrder = new ArrayList<Order>();
 		while(true) {
 			System.out.print("Enter a number of feature: ");
 			Scanner sc = new Scanner(System.in);
@@ -36,7 +36,7 @@ public class Aims {
 				break;
 			case 2:
 				int optionNumber = 0;
-				while(optionNumber != 3) {
+				while(optionNumber != 4) {
 					System.out.print("1. Add Book\n2. Add DVD\n3. Add CompactDisc\n4. Exit feature 2\nSelect number of option: ");
 					optionNumber = sc.nextInt();
 					sc.nextLine();
@@ -80,9 +80,7 @@ public class Aims {
 		String categoryCD = sc.nextLine();
 		System.out.print("Enter the director of CD: ");
 		String directorCD = sc.nextLine();
-		System.out.print("Enter the length of CD: ");
-		int lengthCD = sc.nextInt();
-		sc.nextLine();
+		int lengthCD = 0;
 		System.out.print("Enter the cost of CD: ");
 		float costCD = sc.nextFloat();
 		sc.nextLine();
@@ -101,8 +99,13 @@ public class Aims {
 			sc.nextLine();
 			Track track = new Track(title,length);
 			cd.addTrack(track);
+			i++;
 		}
-		listOrder.get(0).addMedia(cd);
+		int check = listOrder.get(0).addMedia(cd);
+		if(check == 1) {
+			System.out.println("Imformation about CD just has added\n--------------------------------");
+			cd.play();
+		}
 	}
 	private static void removeItem(ArrayList<Order> listOrder) {
 		Scanner sc_case3 = new Scanner(System.in);
@@ -127,7 +130,11 @@ public class Aims {
 		float costDVD = sc.nextFloat();
 		sc.nextLine();
 		DigitalVideoDisc dvd = new DigitalVideoDisc(idDVD,titleDVD,categoryDVD,costDVD,lengthDVD,directorDVD);
-		listOrder.get(0).addMedia(dvd);
+		int check = listOrder.get(0).addMedia(dvd);
+		if(check == 1) {
+			System.out.println("Imformation about DVD just has added\n--------------------------------");
+			dvd.play();
+		}
 	}
 	private static void addBook(ArrayList<Order> listOrder, Scanner sc) {
 		System.out.print("Enter the id of book: ");
