@@ -3,9 +3,6 @@ package hust.soict.hedspi.aims.order;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
-import hust.soict.hedspi.aims.media.Book;
-import hust.soict.hedspi.aims.media.DigitalVideoDisc;
 import hust.soict.hedspi.aims.media.Media;
 
 public class Order {

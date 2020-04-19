@@ -1,6 +1,6 @@
 package hust.soict.hedspi.aims;
 
-import hust.soict.hedspi.aims.media.DigitalVideoDisc;
+import hust.soict.hedspi.aims.media.disc.DigitalVideoDisc;
 import hust.soict.hedspi.aims.order.Order;
 
 public class DiskTest {
