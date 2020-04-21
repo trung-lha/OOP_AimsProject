@@ -12,8 +12,15 @@ public class Aims {
 	public static void main(String[] args){
 		ArrayList<Order> orders = new ArrayList<Order>();
 		showMenu(orders);
+		MemoryDaemon md = new MemoryDaemon();
+		Thread t = new Thread(md);
+		t.setDaemon(true);
+		t.start();
+		t.run();
+		System.out.println(md.getMemoryUsed());
 	}
 	public static void showMenu(ArrayList<Order> listOrder) {
+		int number =-1;
 		System.out.println("Order Management Application: ");
 		System.out.println("--------------------------------");
 		System.out.println("1. Create new order");
@@ -23,14 +30,14 @@ public class Aims {
 		System.out.println("0. Exit");
 		System.out.println("--------------------------------");
 		System.out.println("Please choose a number: 0-1-2-3-4");
-		while(true) {
+		while(number != 0) {
 			System.out.print("Enter a number of feature: ");
 			Scanner sc = new Scanner(System.in);
-			int number = sc.nextInt();
+			number = sc.nextInt();
 			switch(number) {
 			case 0:
 				System.out.println("Exit.");
-				System.exit(0);
+				break;
 			case 1:
 				createNewOrder(listOrder);
 				break;
