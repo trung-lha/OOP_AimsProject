@@ -3,7 +3,11 @@ package hust.soict.hedspi.aims.order;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+
 import hust.soict.hedspi.aims.media.Media;
+import hust.soict.hedspi.aims.media.disc.Book;
+import hust.soict.hedspi.aims.media.disc.CompactDisc;
+import hust.soict.hedspi.aims.media.disc.DigitalVideoDisc;
 
 public class Order {
 	private ArrayList<Media> itemsOrdered = new ArrayList<Media>();
@@ -21,30 +25,26 @@ public class Order {
 	public Order() {
 		this.setDateOrdered();
 	}
-	public boolean checkIdMedia(Media media) {
-		for(Media md : itemsOrdered) {
-			if(md.getId() == media.getId())
-				return true;
-		}
-		return false;
-	}
+	
 	public int addMedia(Media media) {
-		if(checkIdMedia(media)) {
+		if(itemsOrdered.contains(media)) {
 			System.err.println("The media has ID is "+media.getId()+" is exist");
 			return 0;
 		}
 		else {
 			itemsOrdered.add(media);
+			java.util.Collections.sort(itemsOrdered);
 			return 1;
 		}
 	}
 	public void removeMedia(Media media) {
-		if(!checkIdMedia(media)) {
+		if(!itemsOrdered.contains(media)) {
 			System.err.println("The media has ID is "+media.getId()+" is not exist");
 			return;
 		}
 		else {
 			itemsOrdered.remove(media);
+			java.util.Collections.sort(itemsOrdered);
 			System.out.println("The media has ID is "+media.getId()+" is exist");
 		}
 	}
@@ -64,6 +64,7 @@ public class Order {
 		}
 		else {
 			itemsOrdered.remove(target);
+			java.util.Collections.sort(itemsOrdered);
 			System.out.printf("The item has id %d has been Deleted\n",id);
 		}
 	}
@@ -84,6 +85,7 @@ public class Order {
 	}
 	public void printOrdered() {
 		float total=0;
+//		java.util.Collections.sort(itemsOrdered);
 		if(itemsOrdered.size() == 0) {
 			System.out.println("itemsOrder is empty");
 			return;
@@ -91,9 +93,19 @@ public class Order {
 		else {
 		System.out.println("******************** ORDER *********************");
 		System.out.printf("Date: %s\nOrder Items:\n", this.getDateOrdered());
-		for (int i=0;i<itemsOrdered.size();i++) {
-			System.out.printf("%d. %s-%s-%.2f\n",itemsOrdered.get(i).getId(),itemsOrdered.get(i).getTitle(),
-					itemsOrdered.get(i).getCategory(),itemsOrdered.get(i).getCost());
+		for(Media md : itemsOrdered) {
+			if(md instanceof DigitalVideoDisc) {
+				System.out.print(md.getId()+".");
+				((DigitalVideoDisc)md).play();
+			}
+			else if (md instanceof CompactDisc) {
+				System.out.print(md.getId()+".");
+				((CompactDisc)md).play();
+			}
+			else{
+				System.out.print(md.getId()+".");
+				((Book)md).play();
+			}
 		}
 		if(luckyNumber != -1) {
 			System.out.printf("The title of disk free is: %d.%s\n",
@@ -107,7 +119,9 @@ public class Order {
 		System.out.println("************************************************");
 		}
 	}
-	
+	public void sortItemsOrder() {
+		
+	}
 	public Media getALuckyItem() {
 		luckyNumber = 0 + (int)(Math.random()*(itemsOrdered.size()-1));
 		return itemsOrdered.get(luckyNumber);

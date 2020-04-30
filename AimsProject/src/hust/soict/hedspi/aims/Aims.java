@@ -2,7 +2,7 @@ package hust.soict.hedspi.aims;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import hust.soict.hedspi.aims.media.Book;
+import hust.soict.hedspi.aims.media.disc.Book;
 import hust.soict.hedspi.aims.media.disc.CompactDisc;
 import hust.soict.hedspi.aims.media.disc.DigitalVideoDisc;
 import hust.soict.hedspi.aims.media.disc.Track;
@@ -12,12 +12,12 @@ public class Aims {
 	public static void main(String[] args){
 		ArrayList<Order> orders = new ArrayList<Order>();
 		showMenu(orders);
-		MemoryDaemon md = new MemoryDaemon();
-		Thread t = new Thread(md);
-		t.setDaemon(true);
-		t.start();
-		t.run();
-		System.out.println(md.getMemoryUsed());
+//		MemoryDaemon md = new MemoryDaemon();
+//		Thread t = new Thread(md);
+//		t.setDaemon(true);
+//		t.start();
+//		t.run();
+//		System.out.println(md.getMemoryUsed());
 	}
 	public static void showMenu(ArrayList<Order> listOrder) {
 		int number =-1;

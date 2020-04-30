@@ -1,10 +1,11 @@
 package hust.soict.hedspi.aims.media.disc;
 
 import java.util.ArrayList;
+import hust.soict.hedspi.aims.media.Media;
 
 public class CompactDisc extends Disc implements Playable {
 	private String artist;
-	ArrayList<Track> tracks = new ArrayList<Track>();
+	private ArrayList<Track> tracks = new ArrayList<Track>();
 	public String getArtist() {
 		return artist;
 	}
@@ -14,37 +15,8 @@ public class CompactDisc extends Disc implements Playable {
 	}
 	public CompactDisc(int id,String title,String category,float cost,int length,String director,String artist,ArrayList<Track> tracks) {
 		super(id,title,category,cost,length,director);
-		this.length = getLength();
 		this.artist = artist;
 		this.tracks = tracks;
-	}
-	public void addTrack(Track track) {
-		int checkExist = 0;
-		for(Track checkTrack : tracks) {
-			if(checkTrack.getTitle() == track.getTitle())
-				checkExist = 1;
-		}
-		if(checkExist == 1) {
-			System.err.println("The track want to add is exist");
-			return;
-		}
-		else {
-			tracks.add(track);
-		}
-	}
-	public void removeTrack(Track track) {
-		int checkExist = 0;
-		for(Track checkTrack : tracks) {
-			if(checkTrack.getTitle() == track.getTitle())
-				checkExist = 1;
-		}
-		if(checkExist == 0) {
-			System.err.println("The track want to remove is not exist");
-			return;
-		}
-		else {
-			tracks.remove(track);
-		}
 	}
 	public int getLength() {
 		int totalLength = 0;
@@ -53,13 +25,56 @@ public class CompactDisc extends Disc implements Playable {
 		}
 		return totalLength;
 	}
+	public void addTrack(Track track) {
+		if(tracks.contains(track)) {
+			System.err.println("The track want to add is exist");
+			return;
+		}
+		else {
+			tracks.add(track);
+			this.length = this.getLength();
+		}
+	}
+	public void removeTrack(Track track) {
+		if(!tracks.contains(track)) {
+			System.err.println("The track want to remove is not exist");
+			return;
+		}
+		else {
+			tracks.remove(track);
+			this.length = this.getLength();
+		}
+	}
+	
 	public void play() {
 		System.out.println("CompactDisc's name: "+this.getTitle());
 		for(Track track : tracks) {
 			track.play();
 		}
-		System.out.println("Length of CD: "+this.getLength());
-		System.out.println("---------------------------------");
+		System.out.println("Length of CD: "+this.length);
+		System.out.println("CD cost: "+ this.getCost());
+//		System.out.println("---------------------------------");
+	}
+	// sap xep theo so luong cac tracks cua CD, roi den tong do dai cua CD
+	public int compareTo(Media obj) {
+		if((obj instanceof Book))
+			return 1;
+		else if((obj instanceof DigitalVideoDisc))
+			return -1;
+		else {
+			if(this.tracks.size() > ((CompactDisc)obj).tracks.size())
+				return 1;
+			else if(this.tracks.size() < ((CompactDisc)obj).tracks.size())
+				return -1;
+			else {
+				if(this.length > ((CompactDisc)obj).length)
+					return 1;
+				else if(this.length < ((CompactDisc)obj).length)
+					return -1;
+				return 0;
+			}
+		}
+		
 	}
 
 }
