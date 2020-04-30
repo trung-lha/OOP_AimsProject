@@ -2,7 +2,7 @@ package hust.soict.hedspi.aims;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import hust.soict.hedspi.aims.media.disc.Book;
+import hust.soict.hedspi.aims.media.book.Book;
 import hust.soict.hedspi.aims.media.disc.CompactDisc;
 import hust.soict.hedspi.aims.media.disc.DigitalVideoDisc;
 import hust.soict.hedspi.aims.media.disc.Track;

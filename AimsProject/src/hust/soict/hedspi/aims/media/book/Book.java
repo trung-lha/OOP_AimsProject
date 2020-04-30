@@ -1,13 +1,21 @@
-package hust.soict.hedspi.aims.media.disc;
+package hust.soict.hedspi.aims.media.book;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 
 import hust.soict.hedspi.aims.media.Media;
+import hust.soict.hedspi.aims.media.disc.CompactDisc;
+import hust.soict.hedspi.aims.media.disc.DigitalVideoDisc;
 
 public class Book extends Media{
 	private List<String> authors = new ArrayList<String>();
-	
+	private String content;
+	private List<String> contentTokens = new ArrayList<String>();
+	Map<String,Integer> wordFrequency = new TreeMap<String,Integer>();
 	public Book(String title,String category,float cost) {
 		super(title,category,cost);
 	}
@@ -15,10 +23,12 @@ public class Book extends Media{
 		super(title,category,cost);
 		this.id = id;
 	}
-	
 	public Book(String title, String category,float cost, List<String> authors) {
 		super(title,category,cost);
 		this.authors = authors;
+	}
+	public void setContent(String content) {
+		this.content = content;
 	}
 	public void addAuthor(String authorName) {
 		if(authors.contains(authorName)) {
@@ -57,5 +67,29 @@ public class Book extends Media{
 			else return 0;
 		}
 	}
-
+	public void processContent() {
+		String splitContent[];
+		splitContent = this.content.split("\\s+");
+		for (String word : splitContent) {
+			contentTokens.add(word);
+			if(wordFrequency.containsKey(word)) {
+				wordFrequency.put(word,wordFrequency.get(word)+1);
+			}
+			else {
+				wordFrequency.put(word, 1);
+			}
+		}
+		
+	}
+	public String toString() {
+		processContent();
+		System.out.println("The content length is: "+contentTokens.size());
+		System.out.println("The list of word in content are:");
+		Set<String> keySet = wordFrequency.keySet();
+		for(String word : keySet) {
+			System.out.print(word+" - The frequency in content: ");
+			System.out.println(wordFrequency.get(word));
+		}
+		return this.content;
+	}
 }

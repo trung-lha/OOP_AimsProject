@@ -2,6 +2,7 @@ package hust.soict.hedspi.aims.media.disc;
 
 import java.util.ArrayList;
 import hust.soict.hedspi.aims.media.Media;
+import hust.soict.hedspi.aims.media.book.Book;
 
 public class CompactDisc extends Disc implements Playable {
 	private String artist;

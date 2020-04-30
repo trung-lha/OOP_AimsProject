@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import hust.soict.hedspi.aims.media.Media;
-import hust.soict.hedspi.aims.media.disc.Book;
+import hust.soict.hedspi.aims.media.book.Book;
 import hust.soict.hedspi.aims.media.disc.CompactDisc;
 import hust.soict.hedspi.aims.media.disc.DigitalVideoDisc;
 
