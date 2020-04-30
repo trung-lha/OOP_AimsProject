@@ -1,7 +1,9 @@
-package hust.soict.hedspi.aims.media;
+package hust.soict.hedspi.aims.media.disc;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import hust.soict.hedspi.aims.media.Media;
 
 public class Book extends Media{
 	private List<String> authors = new ArrayList<String>();
@@ -38,5 +40,22 @@ public class Book extends Media{
 			System.out.println("The Author has removed");
 		}
 	} 
+	public void play() {
+		System.out.println("Book title: " + this.getTitle());
+		System.out.println("Book cost: "+ this.getCost());
+//		System.out.println("--------------------------------");
+	}
+	// sap xep theo title cua Book
+	public int compareTo(Media obj) {
+		if((obj instanceof DigitalVideoDisc) || (obj instanceof CompactDisc))
+			return -1;
+		else {
+			if(this.title.compareTo(((Book)obj).getTitle()) > 0)
+					return 1;
+			else if(this.title.compareTo(((Book)obj).getTitle()) < 0)
+					return -1;
+			else return 0;
+		}
+	}
 
 }

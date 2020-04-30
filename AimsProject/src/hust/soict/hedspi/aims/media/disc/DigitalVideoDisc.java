@@ -1,5 +1,7 @@
 package hust.soict.hedspi.aims.media.disc;
 
+import hust.soict.hedspi.aims.media.Media;
+
 public class DigitalVideoDisc extends Disc implements Playable{
 	//constructor
 	public DigitalVideoDisc(int id,String title,String category,float cost,int length,String director) {
@@ -23,6 +25,26 @@ public class DigitalVideoDisc extends Disc implements Playable{
 	public void play() {
 		System.out.println("Playing DVD: " + this.getTitle());
 		System.out.println("DVD length: " + this.getLength());
-		System.out.println("--------------------------------");
+		System.out.println("DVD cost: "+ this.getCost());
+//		System.out.println("--------------------------------");
+	}
+	//sap xep theo cost cua DVD, roi den do dai cua DVD
+	public int compareTo(Media obj) {
+		if(obj instanceof DigitalVideoDisc) {
+			if(this.cost > ((DigitalVideoDisc)obj).cost)
+				return 1;
+			else if(this.cost < ((DigitalVideoDisc)obj).cost)
+				return -1;
+			else {
+				if(this.length > ((DigitalVideoDisc)obj).length)
+					return 1;
+				else if(this.length < ((DigitalVideoDisc)obj).length)
+					return -1;
+				return 0;
+			}
+		}
+		else if(obj instanceof CompactDisc)
+			return 1;
+		else return -1;
 	}
 }
