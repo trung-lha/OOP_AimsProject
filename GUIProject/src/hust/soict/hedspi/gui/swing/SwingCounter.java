@@ -1,4 +1,4 @@
-package hust.soict.hedspi.gui.swing;
+ package hust.soict.hedspi.gui.swing;
 
 
 import java.awt.*; // Using AWT layouts
@@ -19,14 +19,12 @@ public class SwingCounter extends JFrame { // JFrame instead of Frame
 		cp.setLayout(new FlowLayout()); // The content-pane sets its layout
 		
 		cp.add(new JLabel("Counter"));
-		tfCount = new JTextField("0");
+		tfCount = new JTextField("0",10);
 		tfCount.setEditable(false);
 		cp.add(tfCount);
 		btnCount = new JButton("Count");
 		cp.add(btnCount);
-		Container cp2 = getContentPane();
-		cp2.setLayout(new BorderLayout());
-		cp2.add(new JLabel("anhtrung"));
+		
 		// Allocate an anonymous instance of an anonymous inner class that
 		// implements ActionListener as ActionEvent listener
 		btnCount.addActionListener(new ActionListener() {
