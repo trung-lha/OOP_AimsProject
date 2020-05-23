@@ -1,6 +1,7 @@
 package hust.soict.hedspi.aims.media.disc;
 
 import java.util.ArrayList;
+
 import hust.soict.hedspi.aims.media.Media;
 import hust.soict.hedspi.aims.media.book.Book;
 
@@ -19,13 +20,18 @@ public class CompactDisc extends Disc implements Playable {
 		this.artist = artist;
 		this.tracks = tracks;
 	}
+	public CompactDisc(int id, String title, String category, float cost, String director, String artist) {
+		super(id,title,category,cost,director);
+		this.artist = artist;
+	}
 	public int getLength() {
 		int totalLength = 0;
 		for(Track track: tracks) {
 			totalLength += track.getLength();
 		}
 		return totalLength;
-	}
+	}	
+	
 	public void addTrack(Track track) {
 		if(tracks.contains(track)) {
 			System.err.println("The track want to add is exist");
@@ -36,6 +42,7 @@ public class CompactDisc extends Disc implements Playable {
 			this.length = this.getLength();
 		}
 	}
+	
 	public void removeTrack(Track track) {
 		if(!tracks.contains(track)) {
 			System.err.println("The track want to remove is not exist");

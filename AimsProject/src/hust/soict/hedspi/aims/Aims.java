@@ -146,7 +146,7 @@ public class Aims {
 	private static void addBook(ArrayList<Order> listOrder, Scanner sc) {
 		System.out.print("Enter the id of book: ");
 		int idBook = sc.nextInt();
-		sc.nextLine();
+//		sc.nextLine();
 		System.out.print("Enter the title of book: ");
 		String titleBook = sc.nextLine();
 		System.out.print("Enter the category of book: ");
@@ -154,7 +154,7 @@ public class Aims {
 		System.out.print("Enter the cost of book: ");
 		float costBook = sc.nextFloat();
 		sc.nextLine();
-		Book book = new Book(idBook,titleBook,categoryBook,costBook);
+		Book book = new Book(idBook, titleBook, categoryBook, costBook);
 		System.out.print("Enter the list of authors (like:'lehoang trandan'):");
 		String strAuthors = sc.nextLine();
 		String[] arrayAuthors = strAuthors.split("\\s");

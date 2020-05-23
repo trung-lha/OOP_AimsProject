@@ -19,13 +19,19 @@ public class Book extends Media{
 	public Book(String title,String category,float cost) {
 		super(title,category,cost);
 	}
-	public Book(int id,String title,String category,float cost) {
-		super(title,category,cost);
-		this.id = id;
-	}
+	
 	public Book(String title, String category,float cost, List<String> authors) {
 		super(title,category,cost);
 		this.authors = authors;
+	}
+	
+	public Book(int idBook, String titleBook, String categoryBook, float costBook,List<String> authors) {
+		this(titleBook,categoryBook,costBook);
+		this.id = idBook;
+		this.authors = authors;
+	}
+	public Book(int id, String title, String category, float cost) {
+		super(id, title, category, cost);
 	}
 	public void setContent(String content) {
 		this.content = content;
