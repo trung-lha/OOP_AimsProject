@@ -266,7 +266,7 @@ public class Dialogs extends JDialog{
 //					System.out.println(cd.getCost());
 //					System.out.println(order.totalCost());
 					if(check == 0) {
-						JOptionPane.showMessageDialog(null, "CD vua nhap da ton tai trong order\n","Warning",JOptionPane.WARNING_MESSAGE);
+						JOptionPane.showMessageDialog(null, "Id media vua nhap bi trung trong Order\n","Warning",JOptionPane.WARNING_MESSAGE);
 					}
 					else {
 						JOptionPane.showMessageDialog(null,"Them CD thanh cong");
