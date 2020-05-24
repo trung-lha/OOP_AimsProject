@@ -1,12 +1,13 @@
 package hust.soict.hedspi.aims.media;
 
 public class Media implements Comparable<Media>{
-	protected int id;
 	protected String title;
 	protected String category;
 	protected float cost;
+	protected int id;
+	
 	public int getId() {
-		return id;
+		return this.id;
 	}
 	public String getTitle() {
 		return title;
@@ -22,10 +23,12 @@ public class Media implements Comparable<Media>{
 		this.title = title;
 		this.category = category;
 	}
-	public Media(int id,String title,String category,float cost) {
+	
+	public Media(int id, String title, String category, float cost) {
 		this(title,category,cost);
 		this.id = id;
 	}
+
 	public boolean equals(Object obj) {
 		if(this.id == ((Media)obj).id)
 			return true;

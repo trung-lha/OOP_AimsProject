@@ -3,6 +3,7 @@ package hust.soict.hedspi.aims.order;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 
 import hust.soict.hedspi.aims.media.Media;
 import hust.soict.hedspi.aims.media.book.Book;
@@ -13,6 +14,8 @@ public class Order {
 	private ArrayList<Media> itemsOrdered = new ArrayList<Media>();
 	int luckyNumber = -1;
 	private String format_date;
+	private float total = 0;
+
 	public void setDateOrdered() {
 		LocalDateTime myDateObj = LocalDateTime.now();
 	    DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
@@ -26,6 +29,15 @@ public class Order {
 		this.setDateOrdered();
 	}
 	
+	public List<Media> getItemsOrdered(){
+		return this.itemsOrdered;
+	}
+	public void setTotalCost() {
+		this.total = this.getTotalCost();
+	}
+	public float getTotalCost() {
+		return this.total;
+	}
 	public int addMedia(Media media) {
 		if(itemsOrdered.contains(media)) {
 			System.err.println("The media has ID is "+media.getId()+" is exist");
@@ -48,11 +60,11 @@ public class Order {
 			System.out.println("The media has ID is "+media.getId()+" is exist");
 		}
 	}
-	public void removeMedia(int id) {
+	public int removeMedia(int id) {
 		int check_exist = 0;
 		int target = 0;
 		for(Media media: itemsOrdered) {
-			if(media.getId() == id) {
+			if(id == media.getId()) {
 				check_exist = 1;
 				break;
 			}
@@ -60,27 +72,28 @@ public class Order {
 		}
 		if(check_exist == 0) {
 			System.err.println("Id of item is not exist");
-			return;
+			return 0;
 		}
 		else {
 			itemsOrdered.remove(target);
 			java.util.Collections.sort(itemsOrdered);
-			System.out.printf("The item has id %d has been Deleted\n",id);
+//			System.out.printf("The item has id %d has been Deleted\n",id);
+			return 1;
 		}
 	}
 	
 	public float totalCost(){
 		int i;
-		float total = 0,cost;
+		float sum = 0,cost;
 		for(i = 0; i< itemsOrdered.size();i++) {
 			cost = itemsOrdered.get(i).getCost();
-			total = total+cost;
+			sum = sum + cost;
 		}
 		if(luckyNumber != -1) {
-			return total - itemsOrdered.get(luckyNumber).getCost();
+			return sum - itemsOrdered.get(luckyNumber).getCost();
 		}
 		else {
-			return total;
+			return sum;
 		}
 	}
 	public void printOrdered() {
@@ -121,6 +134,11 @@ public class Order {
 	}
 	public void sortItemsOrder() {
 		
+	}
+	public boolean isEmpty() {
+		if(itemsOrdered.size() == 0)
+			return true;
+		else return false;
 	}
 	public Media getALuckyItem() {
 		luckyNumber = 0 + (int)(Math.random()*(itemsOrdered.size()-1));
