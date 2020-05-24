@@ -33,7 +33,7 @@ public class Order {
 		return this.itemsOrdered;
 	}
 	public void setTotalCost() {
-		this.total = this.getTotalCost();
+		this.total = this.totalCost();
 	}
 	public float getTotalCost() {
 		return this.total;
@@ -46,6 +46,7 @@ public class Order {
 		else {
 			itemsOrdered.add(media);
 			java.util.Collections.sort(itemsOrdered);
+			setTotalCost();
 			return 1;
 		}
 	}
@@ -82,6 +83,7 @@ public class Order {
 		}
 	}
 	
+	
 	public float totalCost(){
 		int i;
 		float sum = 0,cost;
@@ -89,12 +91,7 @@ public class Order {
 			cost = itemsOrdered.get(i).getCost();
 			sum = sum + cost;
 		}
-		if(luckyNumber != -1) {
-			return sum - itemsOrdered.get(luckyNumber).getCost();
-		}
-		else {
-			return sum;
-		}
+		return sum;
 	}
 	public void printOrdered() {
 		float total=0;

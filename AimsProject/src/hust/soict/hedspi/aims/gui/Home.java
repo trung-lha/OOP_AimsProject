@@ -85,15 +85,16 @@ public class Home extends JFrame {
 					DefaultTableModel model = new DefaultTableModel(null,column_names); 
 					JTable table = new JTable(model);
 					int numberOrder = 1;
+					
 					for(Order order : listOrder) {
 						if(order.isEmpty()) {
 							JOptionPane.showMessageDialog(null, "Order hien dang trong", "Warning", JOptionPane.WARNING_MESSAGE);
 							return;
 						}
 						else {
-							Media luckyItem = order.getALuckyItem();
-							List<Media> items = new ArrayList<Media>();
 							
+							List<Media> items = new ArrayList<Media>();
+							Media luckyItem = order.getALuckyItem();
 							items = order.getItemsOrdered();
 							model.addRow(new Object[] {"","","                              Order "+numberOrder,"",""});
 							for(Media media: items) {
@@ -107,9 +108,9 @@ public class Home extends JFrame {
 									typeString = "CD";
 								}
 								
-								float cost = media.equals(luckyItem)? media.getCost() : 0;
+//								float cost = media.equals(luckyItem)? media.getCost() : 0;
 								model.addRow(new Object[]{media.getId(),typeString,
-										media.getTitle(),media.getCategory(),cost});							
+										media.getTitle(),media.getCategory(),media.getCost()});							
 							}
 							model.addRow(new Object[] {"","","","Lucky Item cost ",luckyItem.getCost()});
 							model.addRow(new Object[] {"","","","Total: ",order.totalCost()-luckyItem.getCost()});
