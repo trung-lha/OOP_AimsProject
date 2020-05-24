@@ -108,11 +108,10 @@ public class Home extends JFrame {
 									typeString = "CD";
 								}
 								
-//								float cost = media.equals(luckyItem)? media.getCost() : 0;
 								model.addRow(new Object[]{media.getId(),typeString,
 										media.getTitle(),media.getCategory(),media.getCost()});							
 							}
-							model.addRow(new Object[] {"","","","Lucky Item cost ",luckyItem.getCost()});
+							model.addRow(new Object[] {"","","Lucky Item id: "+ luckyItem.getId(),"Lucky Item cost ",luckyItem.getCost()});
 							model.addRow(new Object[] {"","","","Total: ",order.totalCost()-luckyItem.getCost()});
 							
 							table.setSize(500, 300);

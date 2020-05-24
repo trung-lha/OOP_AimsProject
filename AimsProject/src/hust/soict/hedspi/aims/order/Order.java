@@ -40,7 +40,7 @@ public class Order {
 	}
 	public int addMedia(Media media) {
 		if(itemsOrdered.contains(media)) {
-			System.err.println("The media has ID is "+media.getId()+" is exist");
+//			System.err.println("The media has ID is "+media.getId()+" is exist");
 			return 0;
 		}
 		else {
@@ -72,12 +72,13 @@ public class Order {
 			target++;
 		}
 		if(check_exist == 0) {
-			System.err.println("Id of item is not exist");
+//			System.err.println("Id of item is not exist");
 			return 0;
 		}
 		else {
 			itemsOrdered.remove(target);
 			java.util.Collections.sort(itemsOrdered);
+			setTotalCost();
 //			System.out.printf("The item has id %d has been Deleted\n",id);
 			return 1;
 		}
