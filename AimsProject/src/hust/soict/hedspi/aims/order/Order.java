@@ -32,6 +32,9 @@ public class Order {
 	public List<Media> getItemsOrdered(){
 		return this.itemsOrdered;
 	}
+	public void setTotalCost() {
+		this.total = this.getTotalCost();
+	}
 	public float getTotalCost() {
 		return this.total;
 	}
@@ -43,7 +46,6 @@ public class Order {
 		else {
 			itemsOrdered.add(media);
 			java.util.Collections.sort(itemsOrdered);
-			this.total = this.totalCost();
 			return 1;
 		}
 	}
@@ -75,23 +77,23 @@ public class Order {
 		else {
 			itemsOrdered.remove(target);
 			java.util.Collections.sort(itemsOrdered);
-			System.out.printf("The item has id %d has been Deleted\n",id);
+//			System.out.printf("The item has id %d has been Deleted\n",id);
 			return 1;
 		}
 	}
 	
 	public float totalCost(){
 		int i;
-		float total = 0,cost;
+		float sum = 0,cost;
 		for(i = 0; i< itemsOrdered.size();i++) {
 			cost = itemsOrdered.get(i).getCost();
-			total = total+cost;
+			sum = sum + cost;
 		}
 		if(luckyNumber != -1) {
-			return total - itemsOrdered.get(luckyNumber).getCost();
+			return sum - itemsOrdered.get(luckyNumber).getCost();
 		}
 		else {
-			return total;
+			return sum;
 		}
 	}
 	public void printOrdered() {

@@ -249,7 +249,7 @@ public class Dialogs extends JDialog{
 				}
 				else {
 					CompactDisc cd = new CompactDisc(CD.getId(), CD.getTitle(), CD.getCategory(), CD.getCost(), directorField.getText(), artistField.getText());
-										
+									
 					try {
 						String strTrack[] = trackField.getText().split(",");
 						for(String str : strTrack) {
@@ -260,13 +260,13 @@ public class Dialogs extends JDialog{
 					}catch(Exception e1) {
 						JOptionPane.showMessageDialog(null, "Nhap sai dinh dang cho truong track\n","Warning",JOptionPane.WARNING_MESSAGE);
 						cd = null;
-					}
-					if(cd == null) {
 						return;
 					}
 					int check = order.addMedia(cd);
+//					System.out.println(cd.getCost());
+//					System.out.println(order.totalCost());
 					if(check == 0) {
-						JOptionPane.showMessageDialog(null, "The Media has entered is Exits\n","Warning",JOptionPane.WARNING_MESSAGE);
+						JOptionPane.showMessageDialog(null, "CD vua nhap da ton tai trong order\n","Warning",JOptionPane.WARNING_MESSAGE);
 					}
 					else {
 						JOptionPane.showMessageDialog(null,"Them CD thanh cong");

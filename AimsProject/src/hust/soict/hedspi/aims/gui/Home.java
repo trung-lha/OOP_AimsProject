@@ -25,19 +25,19 @@ public class Home extends JFrame {
 	protected JButton addButton = new JButton("Add item to the order");
 	protected JButton removeButton = new JButton("Remove item by id");
 	protected JButton displayButton =  new JButton("Display the items of list order ");
-	protected JButton exit = new JButton("Exit menu order");
+	protected JButton exitButton = new JButton("Exit");
 	private static ArrayList<Order> listOrder = new ArrayList<Order>();
 	
 	public Home() {
 		setLayout(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(800,600);
-		setResizable(false); 	//Khong cho thay doi kich thuoc cua frame
+		setResizable(false); 	
 		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
-		int x = (int) ((dimension.getWidth() - 800))/2; // set cho o giua chieu ngang
-		int y = (int) ((dimension.getHeight() - 600))/2; // set cho frame o giua man hinh theo chieu doc
-		setLocation(x, y); //set cho frame o chinh giua man hinh
-		setVisible(true);  // 
+		int x = (int) ((dimension.getWidth() - 800))/2; 
+		int y = (int) ((dimension.getHeight() - 600))/2; 
+		setLocation(x, y); 
+		setVisible(true);   
 		setTitle("Menu Order");
 		
 		createButtonSetting();
@@ -47,7 +47,25 @@ public class Home extends JFrame {
 		removeButtonSetting();
 		
 		displayButtonSetting();
+		
+		exitButtonSetting();
 	}
+	
+	private void exitButtonSetting() {
+		exitButton.setSize(60,40);
+		exitButton.setLocation(370, 450);
+		exitButton.setFocusPainted(false);
+		exitButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+				System.exit(0);
+			}
+		});
+		add(exitButton);
+	}
+	
 	private void displayButtonSetting() {
 		displayButton.setSize(300, 40);
 		displayButton.setLocation(250, 320);
@@ -61,21 +79,23 @@ public class Home extends JFrame {
 					return;
 				}
 				else {
+					Dialogs displayDialog = new Dialogs(null);
+					displayDialog.setTitle("Display Order");
+					String column_names[]= {"ID","Type","Title","Category","Cost"};
+					DefaultTableModel model = new DefaultTableModel(null,column_names); 
+					JTable table = new JTable(model);
+					int numberOrder = 1;
 					for(Order order : listOrder) {
 						if(order.isEmpty()) {
 							JOptionPane.showMessageDialog(null, "Order hien dang trong", "Warning", JOptionPane.WARNING_MESSAGE);
 							return;
 						}
 						else {
-							Dialogs displayDialog = new Dialogs(null);
-							displayDialog.setTitle("Display Order");
-							
 							Media luckyItem = order.getALuckyItem();
-							String column_names[]= {"ID","Type","Title","Category","Cost($)"};
 							List<Media> items = new ArrayList<Media>();
+							
 							items = order.getItemsOrdered();
-							DefaultTableModel model = new DefaultTableModel(null,column_names); 
-							JTable table = new JTable(model);
+							model.addRow(new Object[] {"","","                              Order "+numberOrder,"",""});
 							for(Media media: items) {
 								String typeString ;
 								if(media instanceof Book)
@@ -86,15 +106,13 @@ public class Home extends JFrame {
 								else {
 									typeString = "CD";
 								}
-//								System.out.println(media.getId());
-//								System.out.println(order.getTotalCost());
 								
 								float cost = media.equals(luckyItem)? media.getCost() : 0;
 								model.addRow(new Object[]{media.getId(),typeString,
 										media.getTitle(),media.getCategory(),cost});							
 							}
-							model.addRow(new Object[] {"","","","Lucky Item cost: ",luckyItem.getCost()});
-							model.addRow(new Object[] {"","","","Total: ",order.getTotalCost()-luckyItem.getCost()});
+							model.addRow(new Object[] {"","","","Lucky Item cost ",luckyItem.getCost()});
+							model.addRow(new Object[] {"","","","Total: ",order.totalCost()-luckyItem.getCost()});
 							
 							table.setSize(500, 300);
 							table.setLocation(50,30);
@@ -121,9 +139,11 @@ public class Home extends JFrame {
 							    }
 							    
 							}
-							displayDialog.setVisible(true);
+							numberOrder = numberOrder + 1;
 						}
+						
 					}
+					displayDialog.setVisible(true);
 				}
 			}
 		});
@@ -189,6 +209,7 @@ public class Home extends JFrame {
 						public void actionPerformed(ActionEvent e) {
 							Dialogs cd = new Dialogs(null,"CD Order");
 							cd.cdDialog(cd, listOrder.get(locationOrder));
+//							listOrder.get(locationOrder).setTotalCost();
 							cd.setVisible(false);
 						}
 					});

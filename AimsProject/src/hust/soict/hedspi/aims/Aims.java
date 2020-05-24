@@ -146,7 +146,7 @@ public class Aims {
 	private static void addBook(ArrayList<Order> listOrder, Scanner sc) {
 		System.out.print("Enter the id of book: ");
 		int idBook = sc.nextInt();
-//		sc.nextLine();
+		sc.nextLine();
 		System.out.print("Enter the title of book: ");
 		String titleBook = sc.nextLine();
 		System.out.print("Enter the category of book: ");
