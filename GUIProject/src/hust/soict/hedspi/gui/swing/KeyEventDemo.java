@@ -15,7 +15,7 @@ public class KeyEventDemo extends Frame implements KeyListener {
       setLayout(new FlowLayout()); // "super" frame sets to FlowLayout
  
       add(new Label("Enter Text: "));
-      tfInput = new TextField(10);
+      tfInput = new TextField(20);
       add(tfInput);
       taDisplay = new TextArea(5, 40); // 5 rows, 40 columns
       add(taDisplay);

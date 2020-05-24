@@ -1,7 +1,14 @@
 package hust.soict.hedspi.gui.swing;
 
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.Button;
+import java.awt.FlowLayout;
+import java.awt.Frame;
+import java.awt.Label;
+import java.awt.TextField;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JFrame;
  
 // An AWT GUI program inherits from the top-level container java.awt.Frame
 public class AWTCounterNamedInnerClass extends Frame {
@@ -26,10 +33,11 @@ public class AWTCounterNamedInnerClass extends Frame {
       // Construct an anonymous instance of BtnCountListener (a named inner class).
       // btnCount adds this instance as a ActionListener.
       btnCount.addActionListener(new BtnCountListener());
- 
+//      setDefaultCloseOperation(EXIT_ON_CLOSE);
       setTitle("AWT Counter");
       setSize(250, 100);
       setVisible(true);
+      
    }
  
    // The entry main method
