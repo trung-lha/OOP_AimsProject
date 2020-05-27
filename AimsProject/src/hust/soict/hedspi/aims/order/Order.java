@@ -3,19 +3,29 @@ package hust.soict.hedspi.aims.order;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.List;
 
 import hust.soict.hedspi.aims.media.Media;
 import hust.soict.hedspi.aims.media.book.Book;
 import hust.soict.hedspi.aims.media.disc.CompactDisc;
 import hust.soict.hedspi.aims.media.disc.DigitalVideoDisc;
+import hust.soict.hedspi.exception.AddException;
+import hust.soict.hedspi.exception.LuckyNumberException;
+import hust.soict.hedspi.exception.PlayerException;
+import hust.soict.hedspi.exception.RemoveException;
 
 public class Order {
 	private ArrayList<Media> itemsOrdered = new ArrayList<Media>();
 	int luckyNumber = -1;
 	private String format_date;
 	private float total = 0;
-
+	private int idOrder = -1;
+	private static final float sale = 0.2f;
+	private static final float totalToSale = 200f;
+	private static final float numberToSale = 5;
+	
+	public int getIdOrder() {
+		return idOrder;
+	}
 	public void setDateOrdered() {
 		LocalDateTime myDateObj = LocalDateTime.now();
 	    DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
@@ -29,7 +39,7 @@ public class Order {
 		this.setDateOrdered();
 	}
 	
-	public List<Media> getItemsOrdered(){
+	public ArrayList<Media> getItemsOrdered(){
 		return this.itemsOrdered;
 	}
 	public void setTotalCost() {
@@ -38,16 +48,14 @@ public class Order {
 	public float getTotalCost() {
 		return this.total;
 	}
-	public int addMedia(Media media) {
+	public void addMedia(Media media) throws AddException {
 		if(itemsOrdered.contains(media)) {
-//			System.err.println("The media has ID is "+media.getId()+" is exist");
-			return 0;
+			throw new AddException("Trung Media, khong the them vao Order");
 		}
 		else {
 			itemsOrdered.add(media);
 			java.util.Collections.sort(itemsOrdered);
 			setTotalCost();
-			return 1;
 		}
 	}
 	public void removeMedia(Media media) {
@@ -61,7 +69,7 @@ public class Order {
 			System.out.println("The media has ID is "+media.getId()+" is exist");
 		}
 	}
-	public int removeMedia(int id) {
+	public int removeMedia(int id) throws Exception{
 		int check_exist = 0;
 		int target = 0;
 		for(Media media: itemsOrdered) {
@@ -72,8 +80,7 @@ public class Order {
 			target++;
 		}
 		if(check_exist == 0) {
-//			System.err.println("Id of item is not exist");
-			return 0;
+			throw new RemoveException("Id Media vua nhap khong ton tai");
 		}
 		else {
 			itemsOrdered.remove(target);
@@ -107,11 +114,19 @@ public class Order {
 		for(Media md : itemsOrdered) {
 			if(md instanceof DigitalVideoDisc) {
 				System.out.print(md.getId()+".");
-				((DigitalVideoDisc)md).play();
+				try {
+					((DigitalVideoDisc)md).play();
+				} catch (PlayerException e1) {
+					System.out.println(e1.getMessage());
+				}
 			}
 			else if (md instanceof CompactDisc) {
 				System.out.print(md.getId()+".");
-				((CompactDisc)md).play();
+				try {
+					((CompactDisc)md).play();
+				} catch (PlayerException e1) {
+					System.out.println(e1.getMessage());
+				}
 			}
 			else{
 				System.out.print(md.getId()+".");
@@ -130,16 +145,20 @@ public class Order {
 		System.out.println("************************************************");
 		}
 	}
-	public void sortItemsOrder() {
-		
-	}
+	
 	public boolean isEmpty() {
 		if(itemsOrdered.size() == 0)
 			return true;
 		else return false;
 	}
-	public Media getALuckyItem() {
-		luckyNumber = 0 + (int)(Math.random()*(itemsOrdered.size()-1));
-		return itemsOrdered.get(luckyNumber);
+	public Media getALuckyItem() throws Exception{
+		if(itemsOrdered.size() >= numberToSale && this.totalCost() >= totalToSale) {
+			do {
+				luckyNumber = 0 + (int)(Math.random()*(itemsOrdered.size()-1));
+			} while (itemsOrdered.get(luckyNumber).getCost() > this.totalCost()*sale);
+			return itemsOrdered.get(luckyNumber);
+		}else {
+			throw new LuckyNumberException("Khong du dieu kien nhan san pham mien phi\nSo luong SP >= " + numberToSale + "\nTotal >= " + totalToSale+"\nNeu duoc giam thi SP co gia khong qua 20% gia tri don hang");
+		}		
 	}
 }

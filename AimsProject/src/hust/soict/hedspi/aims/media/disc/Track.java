@@ -1,8 +1,10 @@
 package hust.soict.hedspi.aims.media.disc;
-import java.lang.Comparable;
+import hust.soict.hedspi.exception.PlayerException;
+
 public class Track implements Playable,Comparable{
 	private String title;
-	private int length;
+	private int length = 0;
+	public String playing;
 	public String getTitle() {
 		return title;
 	}
@@ -13,9 +15,16 @@ public class Track implements Playable,Comparable{
 		this.title = title;
 		this.length = length;
 	}
-	public void play() {
-		System.out.println("Playing DVD: " + this.getTitle());
-		System.out.println("DVD length: " + this.getLength());
+	public void play() throws PlayerException{
+		if(this.getLength() > 0) {
+			System.out.println("Playing DVD: " + this.getTitle());
+			System.out.println("DVD length: " + this.getLength());
+			playing = "Playing DVD: " + this.getTitle() + "\n" +
+					"DVD length: " + this.getLength() + "\n";
+		}
+		else {
+			throw new PlayerException("Track length is non-positive");
+		}
 	}
 	public boolean equals(Object obj) {
 		String titleEqual = ((Track)obj).title;

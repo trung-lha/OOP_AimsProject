@@ -1,11 +1,17 @@
 package hust.soict.hedspi.aims.media.disc;
 
+import javax.swing.JOptionPane;
+
 import hust.soict.hedspi.aims.media.Media;
+import hust.soict.hedspi.exception.PlayerException;
 
 public class DigitalVideoDisc extends Disc implements Playable{
 	//constructor
 	public DigitalVideoDisc(int id,String title,String category,float cost,int length,String director) {
 		super(id,title,category,cost,length,director);
+	}
+	public DigitalVideoDisc(int id,String title,String category,float cost,String director) {
+		super(id,title,category,cost,director);
 	}
 	
 	//find out the corresponding disk of the current object contains the title
@@ -22,11 +28,18 @@ public class DigitalVideoDisc extends Disc implements Playable{
 			return true;
 		else return false;
 	}
-	public void play() {
-		System.out.println("Playing DVD: " + this.getTitle());
-		System.out.println("DVD length: " + this.getLength());
-		System.out.println("DVD cost: "+ this.getCost());
-//		System.out.println("--------------------------------");
+	public void play() throws PlayerException {
+		if(this.getLength() > 0) {
+			System.out.println("Playing DVD: " + this.getTitle());
+			System.out.println("DVD length: " + this.getLength());
+			System.out.println("DVD cost: "+ this.getCost());
+			String message = "Playing DVD: " + this.getTitle() +"\n"+"DVD length: " + this.getLength()+"\n"+"DVD cost: "+ this.getCost();
+			JOptionPane.showMessageDialog(null, message, "Play DVD", JOptionPane.INFORMATION_MESSAGE);
+		}
+		else {
+			throw new PlayerException("DVD length is non-positive");
+		}
+		
 	}
 	//sap xep theo cost cua DVD, roi den do dai cua DVD
 	public int compareTo(Media obj) {

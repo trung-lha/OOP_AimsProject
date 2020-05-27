@@ -4,10 +4,16 @@ import java.util.ArrayList;
 
 import hust.soict.hedspi.aims.media.Media;
 import hust.soict.hedspi.aims.media.book.Book;
+import hust.soict.hedspi.exception.AddException;
+import hust.soict.hedspi.exception.PlayerException;
 
 public class CompactDisc extends Disc implements Playable {
 	private String artist;
 	private ArrayList<Track> tracks = new ArrayList<Track>();
+	private String playCd = "";
+	public String getPlaying() {
+		return playCd;
+	}
 	public String getArtist() {
 		return artist;
 	}
@@ -32,10 +38,9 @@ public class CompactDisc extends Disc implements Playable {
 		return totalLength;
 	}	
 	
-	public void addTrack(Track track) {
-		if(tracks.contains(track)) {
-			System.err.println("The track want to add is exist");
-			return;
+	public void addTrack(Track track) throws AddException{
+		if(tracks.contains(track) || track.getLength() == 0) {
+			throw new AddException("Track bi loi khong them duoc vao CD"); 
 		}
 		else {
 			tracks.add(track);
@@ -54,14 +59,24 @@ public class CompactDisc extends Disc implements Playable {
 		}
 	}
 	
-	public void play() {
-		System.out.println("CompactDisc's name: "+this.getTitle());
-		for(Track track : tracks) {
-			track.play();
+	public void play() throws PlayerException{
+		if(this.getLength() > 0) {
+			System.out.println("CompactDisc's name: "+this.getTitle());
+			this.playCd += "CompactDisc's name: "+this.getTitle()+ "\n" + "---------------------------" + "\n";
+			for(Track track : tracks) {
+					track.play();
+					this.playCd += track.playing;
+			}
+			this.playCd += "-------------------\n";
+			this.playCd += "Length of CD: "+this.length+"\n"+"CD cost: "+ this.getCost()+"\n";
+			System.out.println("Length of CD: "+this.length);
+			System.out.println("CD cost: "+ this.getCost());
+			
 		}
-		System.out.println("Length of CD: "+this.length);
-		System.out.println("CD cost: "+ this.getCost());
-//		System.out.println("---------------------------------");
+		else {
+			throw new PlayerException("CD length is non-positive");
+		}
+		
 	}
 	// sap xep theo so luong cac tracks cua CD, roi den tong do dai cua CD
 	public int compareTo(Media obj) {

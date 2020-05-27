@@ -2,6 +2,7 @@ package hust.soict.hedspi.aims.gui;
 
 import java.awt.Dimension;
 import java.awt.Frame;
+import java.awt.List;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,11 +14,15 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
+import hust.soict.hedspi.aims.media.Media;
 import hust.soict.hedspi.aims.media.book.Book;
 import hust.soict.hedspi.aims.media.disc.CompactDisc;
 import hust.soict.hedspi.aims.media.disc.DigitalVideoDisc;
 import hust.soict.hedspi.aims.media.disc.Track;
 import hust.soict.hedspi.aims.order.Order;
+import hust.soict.hedspi.exception.InputException;
+import hust.soict.hedspi.exception.PlayerException;
+import hust.soict.hedspi.exception.RemoveException;
 
 public class Dialogs extends JDialog{
 	private JLabel idJLabel = new JLabel("ID");
@@ -40,21 +45,23 @@ public class Dialogs extends JDialog{
 		return cateField.getText();
 	}
 	
-	private Float getCost() {
+	private Float getCost() throws Exception{
 		float cost;
 		try {
 			cost = Float.parseFloat(costField.getText());
+			if (cost <= 0) throw new InputException("Cost nhap vao khong hop le (Cost phai >= 0)");
 		} catch (Exception e) {
-			cost = -1;
+			throw new InputException("Cost phai dang so, ban nhap sai dinh dang");
 		}
 		return cost;
 	}
-	private int getId() {
+	private int getId() throws Exception {
 		int id;
 		try {
 			id = Integer.parseInt(idField.getText());
+			if (id <= 0) throw new InputException("Id nhap vao khong hop le (ID phai >= 0)");
 		} catch (Exception e) {
-			id = -1;
+			throw new InputException("ID phai dang so, ban nhap sai dinh dang");
 		}
 		return id;
 	}
@@ -129,8 +136,12 @@ public class Dialogs extends JDialog{
  
 	}
 	
-	public boolean isEmpty() {
-		return titleField.getText().equals("") || idField.getText().equals("") || cateField.getText().equals("") ||costField.getText().equals("");
+	public boolean isEmpty() throws Exception{
+		if(titleField.getText().equals("") || idField.getText().equals("") || 
+				cateField.getText().equals("") ||costField.getText().equals("")) { 
+			throw new InputException("Ban chua nhap day du thong tin cho Media");
+		}
+		else return false;
 	}
 	
 	public void bookDialog(Dialogs bookDialog,Order order) {
@@ -157,34 +168,20 @@ public class Dialogs extends JDialog{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				bookDialog.setVisible(false);
-				float costBook = bookDialog.getCost();
-				int idBook = bookDialog.getId();
-				if(bookDialog.isEmpty()) {
-					JOptionPane.showMessageDialog(null, "Chua dien thong tin cho sach\n",
-							"Warning",JOptionPane.WARNING_MESSAGE);
-//					return;
-				}
-				else if(costBook == -1) {
-					JOptionPane.showMessageDialog(null,"Gia sach vua nhap la khong hop le\n",
-							"Warning",JOptionPane.WARNING_MESSAGE);
-//					return;
-				}
-				else {
+				try {
+					bookDialog.isEmpty();
+					float costBook = bookDialog.getCost();
+					int idBook = bookDialog.getId();
 					String[] authors = authorField.getText().split(",");
 					ArrayList<String> listAuthors = new ArrayList<String>();
 					for(String author: authors) {
 						listAuthors.add(author);
 					}
 					Book book = new Book(idBook, bookDialog.getTitle(), bookDialog.getCategory(), costBook, listAuthors);
-					int check = order.addMedia(book);
-					if(check == 0) {
-						JOptionPane.showMessageDialog(null, "The Media has id entered is exits", "Warning", JOptionPane.ERROR_MESSAGE);
-//						return;
-					}
-					else{
-						JOptionPane.showMessageDialog(null, "Them thanh cong book vao Order", "Book", JOptionPane.INFORMATION_MESSAGE);
-//						return;
-					}
+					order.addMedia(book);
+					JOptionPane.showMessageDialog(null, "Them thanh cong book vao Order", "Book", JOptionPane.INFORMATION_MESSAGE);
+				} catch (Exception inputBook) {
+					JOptionPane.showMessageDialog(null, inputBook.getMessage(), "Warning", JOptionPane.WARNING_MESSAGE);
 				}
 			}
 		});
@@ -232,45 +229,29 @@ public class Dialogs extends JDialog{
 		
 		
 		CD.okJButton.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
 				CD.setVisible(false);
-				float costCD = CD.getCost();
-				if(CD.isEmpty()) {
-					JOptionPane.showMessageDialog(null,"Ban chua nhap du thong tin cho CD","Warning",
-							JOptionPane.WARNING_MESSAGE);
-					return;
-				}
-				if(costCD == -1) {
-					JOptionPane.showMessageDialog(null,"Gia cua CD vua nhap la khong hop le","Warning",
-							JOptionPane.WARNING_MESSAGE);
-					return;
-				}
-				else {
+				try {
+					CD.isEmpty();
 					CompactDisc cd = new CompactDisc(CD.getId(), CD.getTitle(), CD.getCategory(), CD.getCost(), directorField.getText(), artistField.getText());
-									
-					try {
-						String strTrack[] = trackField.getText().split(",");
-						for(String str : strTrack) {
-							String inforTrack[] = str.split(":");
-							Track track = new Track(inforTrack[0], Integer.parseInt(inforTrack[1]));
-							cd.addTrack(track);
-						}
-					}catch(Exception e1) {
-						JOptionPane.showMessageDialog(null, "Nhap sai dinh dang cho truong track\n","Warning",JOptionPane.WARNING_MESSAGE);
-						cd = null;
-						return;
+					String strTrack[] = trackField.getText().split(",");
+					for(String str : strTrack) {
+						String inforTrack[] = str.split(":");
+						Track track = new Track(inforTrack[0], Integer.parseInt(inforTrack[1]));
+						cd.addTrack(track);
 					}
-					int check = order.addMedia(cd);
-//					System.out.println(cd.getCost());
-//					System.out.println(order.totalCost());
-					if(check == 0) {
-						JOptionPane.showMessageDialog(null, "Id media vua nhap bi trung trong Order\n","Warning",JOptionPane.WARNING_MESSAGE);
+					order.addMedia(cd);
+					int checkPlay = JOptionPane.showConfirmDialog(null, "Ban co muon play CD khong?", "Play CD",JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+					if(checkPlay == JOptionPane.YES_OPTION) {
+						cd.play();
+						JOptionPane.showMessageDialog(null, cd.getPlaying(),"Play CD",JOptionPane.INFORMATION_MESSAGE);
 					}
-					else {
-						JOptionPane.showMessageDialog(null,"Them CD thanh cong");
-					}
+					JOptionPane.showMessageDialog(null, "Add thanh cong CD vao Order", "Add Cd", JOptionPane.INFORMATION_MESSAGE);	
+				} catch (Exception addCD) {
+					JOptionPane.showMessageDialog(null, addCD.getMessage(), "Warning", JOptionPane.WARNING_MESSAGE);
 				}
 			}
 		});
@@ -305,38 +286,50 @@ public class Dialogs extends JDialog{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				dvdDL.setVisible(false);
-				int length;
 				try {
-					length = Integer.parseInt(lengthField.getText());
-				}catch (Exception e1) {
-					length = -1;
-				}
-				if(dvdDL.isEmpty() || directorField.getText() == null) {
-					JOptionPane.showMessageDialog(null, "Ban chua nhap day du thong tin cho DVD", "Warning", JOptionPane.WARNING_MESSAGE);
-					return;
-				}
-				else if(length == -1) {
-					JOptionPane.showMessageDialog(null, "Do dai DVD ban nhap khong hop le", "Warning", JOptionPane.WARNING_MESSAGE);
-					return;
-				}
-				else {
-					DigitalVideoDisc dvd = new DigitalVideoDisc(dvdDL.getId(), dvdDL.titleField.getText(), dvdDL.categoryJLabel.getText(),dvdDL.getCost(), length, directorField.getText());
-					int check = order.addMedia(dvd);
-							
-					if(check == 0) {
-						JOptionPane.showMessageDialog(null, "DVD co id vua nhap da ton tai", "Warning", JOptionPane.ERROR_MESSAGE);
-						return;
+					dvdDL.isEmpty();
+					DigitalVideoDisc dvd = new DigitalVideoDisc(dvdDL.getId(), dvdDL.titleField.getText(), dvdDL.categoryJLabel.getText(),dvdDL.getCost(),directorField.getText());
+					dvd.setLength(lengthField.getText());
+					order.addMedia(dvd);		
+					int checkPlay = JOptionPane.showConfirmDialog(null, "Ban co muon play DVD khong?", "Play DVD",JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+					if(checkPlay == JOptionPane.YES_OPTION) {
+						try {
+							dvd.play();
+						} catch (PlayerException e1) {
+							JOptionPane.showMessageDialog(null, e1.getMessage(),"Error Play",JOptionPane.ERROR_MESSAGE);
+							return;
+						}
 					}
-					else {
-						JOptionPane.showMessageDialog(null, "Them thanh cong DVD", "DVD", JOptionPane.INFORMATION_MESSAGE);
-					}
+					JOptionPane.showMessageDialog(null, "Them thanh cong DVD", "DVD", JOptionPane.INFORMATION_MESSAGE);
+				} catch (Exception addDVD) {
+					JOptionPane.showMessageDialog(null, addDVD.getMessage(), "Warning", JOptionPane.WARNING_MESSAGE);
 				}
 			}
-			
 		});
 		dvdDL.setVisible(true);
 	}
-	
+	public void checkIdMediaForRemove(int id,Order order) throws Exception{
+		ArrayList<Media> medias = order.getItemsOrdered();
+		int check = 0;
+		for(Media m : medias) {
+			if(m.getId() == id)
+				check = 1;
+		}
+		if(check == 0) 
+			throw new RemoveException("Id Media vua nhap khong ton tai");
+	}
+	public boolean checkIdOrderForRemove(int id, ArrayList<Order> listOrder) throws Exception{
+		if(id <= listOrder.size() && id > 0) return true;
+		else throw new RemoveException("Id Order vua nhap khong ton tai");
+	}
+	public void checkTypeForRemove(String id1, String id2) throws Exception{
+		try {
+			int id1Convert = Integer.parseInt(id1);
+			int id2Convert = Integer.parseInt(id2);
+		} catch (Exception rm) {
+			throw rm = new RemoveException("Ban nhap sai dinh dang (phai la so)");
+		}
+	}
 	public void removeDialog(ArrayList<Order> listOrder) {
 		
 		// setup field Order for remove dialog
@@ -368,35 +361,29 @@ public class Dialogs extends JDialog{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
-				int idOrder, idItem;
-				
-				try {
-					idOrder = Integer.parseInt(rmTextOrder.getText());
-					idItem = Integer.parseInt(rmTextItem.getText());
-				} catch (Exception e1) {
-					idOrder = -1;
-					idItem = -1;
-				}
 				if(rmLabelOrder.getText() == null || rmLabelItem == null) {
 					JOptionPane.showMessageDialog(null, "Ban chua nhap thong tin", "Error", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
-				else if(idOrder == -1 || idItem == -1) {
-					JOptionPane.showMessageDialog(null, "Ban nhap sai dinh dang id", "Error", JOptionPane.ERROR_MESSAGE);
-					return;
+				try {
+					String strIdOrder = rmTextOrder.getText();
+					String strIdItem = rmTextItem.getText();
+					checkTypeForRemove(strIdOrder, strIdItem);
+					
+					int idOrder = Integer.parseInt(rmTextOrder.getText());
+					int idItem = Integer.parseInt(rmTextItem.getText());
+					
+					checkIdOrderForRemove(idOrder, listOrder);
+					checkIdMediaForRemove(idItem, listOrder.get(idOrder -1));
+					
+					listOrder.get(idOrder -1).removeMedia(idItem);
+					JOptionPane.showMessageDialog(null, "Remove Item complete!", "Remove Item", JOptionPane.INFORMATION_MESSAGE);
+				} catch (Exception e1) {
+					JOptionPane.showMessageDialog(null, e1.getMessage(), "Warning", JOptionPane.WARNING_MESSAGE);
 				}
-				else {
-					if(listOrder.get(idOrder-1).removeMedia(idItem) == 1) {
-						JOptionPane.showMessageDialog(null, "Remove Item complete!", "Remove Item", JOptionPane.INFORMATION_MESSAGE);
-					}
-					else {
-						JOptionPane.showMessageDialog(null, "The id item is not exits", "Remove Item", JOptionPane.WARNING_MESSAGE);
-					}
-				}
-				
 			}
-			
 		});
 		setVisible(true);
 	}
+	
 }

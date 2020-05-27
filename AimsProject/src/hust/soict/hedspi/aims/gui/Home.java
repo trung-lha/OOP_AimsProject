@@ -94,7 +94,12 @@ public class Home extends JFrame {
 						else {
 							
 							List<Media> items = new ArrayList<Media>();
-							Media luckyItem = order.getALuckyItem();
+							Media luckyItem = null;
+							try {
+								luckyItem = order.getALuckyItem();
+							} catch (Exception lucky) {
+								JOptionPane.showMessageDialog(null, lucky.getMessage(), "Lucky Item Infor", JOptionPane.INFORMATION_MESSAGE);
+							}
 							items = order.getItemsOrdered();
 							model.addRow(new Object[] {"","","                              Order "+numberOrder,"",""});
 							for(Media media: items) {
@@ -111,8 +116,14 @@ public class Home extends JFrame {
 								model.addRow(new Object[]{media.getId(),typeString,
 										media.getTitle(),media.getCategory(),media.getCost()});							
 							}
-							model.addRow(new Object[] {"","","Lucky Item id: "+ luckyItem.getId(),"Lucky Item cost ",luckyItem.getCost()});
-							model.addRow(new Object[] {"","","","Total: ",order.totalCost()-luckyItem.getCost()});
+							if(luckyItem != null) {
+								model.addRow(new Object[] {"","","Lucky Item id: "+ luckyItem.getId(),"Lucky Item cost ",luckyItem.getCost()});
+								model.addRow(new Object[] {"","","","Total: ",order.totalCost()-luckyItem.getCost()});
+							}
+							else {
+								model.addRow(new Object[] {"","","Lucky Item id: 0" ,"Lucky Item cost","0"});
+								model.addRow(new Object[] {"","","","Total: ",order.totalCost()});
+							}
 							
 							table.setSize(500, 300);
 							table.setLocation(50,30);

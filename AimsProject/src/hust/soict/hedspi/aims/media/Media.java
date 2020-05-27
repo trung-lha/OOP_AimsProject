@@ -3,8 +3,8 @@ package hust.soict.hedspi.aims.media;
 public class Media implements Comparable<Media>{
 	protected String title;
 	protected String category;
-	protected float cost;
-	protected int id;
+	protected float cost = 0;
+	protected int id = 0;
 	
 	public int getId() {
 		return this.id;
@@ -28,17 +28,27 @@ public class Media implements Comparable<Media>{
 		this(title,category,cost);
 		this.id = id;
 	}
-
-	public boolean equals(Object obj) {
-		if(this.id == ((Media)obj).id)
-			return true;
-		return false;
-	}
 	@Override
+	public boolean equals(Object obj) throws NullPointerException, ClassCastException{
+		if(obj != null) {
+			if (obj instanceof Media) {
+				if(this.title.compareTo(((Media)obj).getTitle()) == 0 && this.cost == ((Media)obj).getCost() )
+					return true;
+				return false;
+			}
+			else {
+				throw new ClassCastException("Object Casting Error");
+			}
+		}
+		else {
+			throw new NullPointerException("Null Pointer Exception");
+		}
+	}
+	
 	public int compareTo(Media obj) {
-		if(this.title.compareTo(((Media)obj).title) > 0)
+		if((this.title.compareTo(obj.title) > 0))
 			return 1;
-		else if(this.title.compareTo(((Media)obj).title) < 0)
+		else if(this.title.compareTo(obj.title) < 0 )
 			return -1;
 		return 0;
 	}
