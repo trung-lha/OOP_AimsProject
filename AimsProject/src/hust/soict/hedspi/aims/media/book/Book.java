@@ -59,7 +59,7 @@ public class Book extends Media{
 	public void play() {
 		System.out.println("Book title: " + this.getTitle());
 		System.out.println("Book cost: "+ this.getCost());
-//		System.out.println("--------------------------------");
+		
 	}
 	// sap xep theo title cua Book
 	public int compareTo(Media obj) {

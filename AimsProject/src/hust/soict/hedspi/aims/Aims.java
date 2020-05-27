@@ -2,11 +2,14 @@ package hust.soict.hedspi.aims;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import javax.swing.JOptionPane;
+
 import hust.soict.hedspi.aims.media.book.Book;
 import hust.soict.hedspi.aims.media.disc.CompactDisc;
 import hust.soict.hedspi.aims.media.disc.DigitalVideoDisc;
 import hust.soict.hedspi.aims.media.disc.Track;
 import hust.soict.hedspi.aims.order.Order;
+import hust.soict.hedspi.exception.PlayerException;
 
 public class Aims {
 	public static void main(String[] args){
@@ -98,27 +101,44 @@ public class Aims {
 		int numberTrack = sc.nextInt();
 		sc.nextLine();
 		int i = 0;
-		while(i<numberTrack) {
-			System.out.print("Enter title of track: ");
-			String title = sc.nextLine();
-			System.out.print("Enter length of track: ");
-			int length = sc.nextInt();
-			sc.nextLine();
-			Track track = new Track(title,length);
-			cd.addTrack(track);
-			i++;
+		if(numberTrack > 0) {
+			while(i<numberTrack) {
+				System.out.print("Enter title of track: ");
+				String title = sc.nextLine();
+				System.out.print("Enter length of track: ");
+				int length = sc.nextInt();
+				sc.nextLine();
+				Track track = new Track(title,length);
+				try{
+					cd.addTrack(track);
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+				i++;
+			}
 		}
-		int check = listOrder.get(0).addMedia(cd);
-		if(check == 1) {
+		try {
+			listOrder.get(0).addMedia(cd);
 			System.out.println("Imformation about CD just has added\n--------------------------------");
-			cd.play();
+			try {
+				cd.play();
+			} catch (PlayerException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+			}
+		} catch (Exception e1) {
+			System.out.println(e1.getMessage());
 		}
+		
 	}
 	private static void removeItem(ArrayList<Order> listOrder) {
 		Scanner sc_case3 = new Scanner(System.in);
 		System.out.printf("Enter item id to remove: ");
 		int idRemove = sc_case3.nextInt();
-		listOrder.get(0).removeMedia(idRemove);
+		try {
+			listOrder.get(0).removeMedia(idRemove);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 	}
 	private static void addDVD(ArrayList<Order> listOrder, Scanner sc) {
 		System.out.print("Enter the id of DVD: ");
@@ -137,11 +157,18 @@ public class Aims {
 		float costDVD = sc.nextFloat();
 		sc.nextLine();
 		DigitalVideoDisc dvd = new DigitalVideoDisc(idDVD,titleDVD,categoryDVD,costDVD,lengthDVD,directorDVD);
-		int check = listOrder.get(0).addMedia(dvd);
-		if(check == 1) {
+		try {
+			listOrder.get(0).addMedia(dvd);
 			System.out.println("Imformation about DVD just has added\n--------------------------------");
-			dvd.play();
+			try {
+				dvd.play();
+			} catch (PlayerException e2) {
+				JOptionPane.showMessageDialog(null, e2.getMessage(),"Error", JOptionPane.ERROR_MESSAGE);
+			}
+		} catch (Exception e2) {
+			System.out.println(e2.getMessage());
 		}
+		
 	}
 	private static void addBook(ArrayList<Order> listOrder, Scanner sc) {
 		System.out.print("Enter the id of book: ");
@@ -161,7 +188,11 @@ public class Aims {
 		for(String author : arrayAuthors) {
 			book.addAuthor(author);
 		}
-		listOrder.get(0).addMedia(book);
+		try {
+			listOrder.get(0).addMedia(book);
+		} catch (Exception e3) {
+			System.out.println(e3.getMessage());
+		}
 	}
 	private static void displayItemList(ArrayList<Order> listOrder, Scanner sc) {
 		listOrder.get(0).printOrdered();

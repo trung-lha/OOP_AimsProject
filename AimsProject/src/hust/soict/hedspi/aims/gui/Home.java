@@ -19,6 +19,7 @@ import hust.soict.hedspi.aims.media.Media;
 import hust.soict.hedspi.aims.media.book.Book;
 import hust.soict.hedspi.aims.media.disc.DigitalVideoDisc;
 import hust.soict.hedspi.aims.order.Order;
+import hust.soict.hedspi.exception.RemoveException;
 
 public class Home extends JFrame {
 	protected JButton createButton = new JButton("Create new Order");
