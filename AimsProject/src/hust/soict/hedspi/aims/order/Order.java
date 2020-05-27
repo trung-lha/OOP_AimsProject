@@ -3,13 +3,13 @@ package hust.soict.hedspi.aims.order;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.List;
 
 import hust.soict.hedspi.aims.media.Media;
 import hust.soict.hedspi.aims.media.book.Book;
 import hust.soict.hedspi.aims.media.disc.CompactDisc;
 import hust.soict.hedspi.aims.media.disc.DigitalVideoDisc;
 import hust.soict.hedspi.exception.AddException;
+import hust.soict.hedspi.exception.LuckyNumberException;
 import hust.soict.hedspi.exception.PlayerException;
 import hust.soict.hedspi.exception.RemoveException;
 
@@ -19,6 +19,10 @@ public class Order {
 	private String format_date;
 	private float total = 0;
 	private int idOrder = -1;
+	private static final float sale = 0.2f;
+	private static final float totalToSale = 200f;
+	private static final float numberToSale = 5;
+	
 	public int getIdOrder() {
 		return idOrder;
 	}
@@ -46,7 +50,7 @@ public class Order {
 	}
 	public void addMedia(Media media) throws AddException {
 		if(itemsOrdered.contains(media)) {
-			throw new AddException("Trung id Media, khong the them vao Order");
+			throw new AddException("Trung Media, khong the them vao Order");
 		}
 		else {
 			itemsOrdered.add(media);
@@ -147,8 +151,14 @@ public class Order {
 			return true;
 		else return false;
 	}
-	public Media getALuckyItem() {
-		luckyNumber = 0 + (int)(Math.random()*(itemsOrdered.size()-1));
-		return itemsOrdered.get(luckyNumber);
+	public Media getALuckyItem() throws Exception{
+		if(itemsOrdered.size() >= numberToSale && this.totalCost() >= totalToSale) {
+			do {
+				luckyNumber = 0 + (int)(Math.random()*(itemsOrdered.size()-1));
+			} while (itemsOrdered.get(luckyNumber).getCost() > this.totalCost()*sale);
+			return itemsOrdered.get(luckyNumber);
+		}else {
+			throw new LuckyNumberException("Khong du dieu kien nhan san pham mien phi\nSo luong SP >= " + numberToSale + "\nTotal >= " + totalToSale+"\nNeu duoc giam thi SP co gia khong qua 20% gia tri don hang");
+		}		
 	}
 }

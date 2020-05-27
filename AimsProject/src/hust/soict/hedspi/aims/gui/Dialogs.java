@@ -308,12 +308,17 @@ public class Dialogs extends JDialog{
 		});
 		dvdDL.setVisible(true);
 	}
-	public void getIdMediaForRemove(int id,Order order) throws Exception{
+	public void checkIdMediaForRemove(int id,Order order) throws Exception{
 		ArrayList<Media> medias = order.getItemsOrdered();
-		if(id > 0 && id <= medias.size()) return;
-		else throw new RemoveException("Id Media vua nhap khong ton tai");
+		int check = 0;
+		for(Media m : medias) {
+			if(m.getId() == id)
+				check = 1;
+		}
+		if(check == 0) 
+			throw new RemoveException("Id Media vua nhap khong ton tai");
 	}
-	public boolean getIdOrderForRemove(int id, ArrayList<Order> listOrder) throws Exception{
+	public boolean checkIdOrderForRemove(int id, ArrayList<Order> listOrder) throws Exception{
 		if(id <= listOrder.size() && id > 0) return true;
 		else throw new RemoveException("Id Order vua nhap khong ton tai");
 	}
@@ -364,10 +369,13 @@ public class Dialogs extends JDialog{
 					String strIdOrder = rmTextOrder.getText();
 					String strIdItem = rmTextItem.getText();
 					checkTypeForRemove(strIdOrder, strIdItem);
+					
 					int idOrder = Integer.parseInt(rmTextOrder.getText());
 					int idItem = Integer.parseInt(rmTextItem.getText());
-					getIdOrderForRemove(idOrder, listOrder);
-					getIdMediaForRemove(idItem, listOrder.get(idOrder -1));
+					
+					checkIdOrderForRemove(idOrder, listOrder);
+					checkIdMediaForRemove(idItem, listOrder.get(idOrder -1));
+					
 					listOrder.get(idOrder -1).removeMedia(idItem);
 					JOptionPane.showMessageDialog(null, "Remove Item complete!", "Remove Item", JOptionPane.INFORMATION_MESSAGE);
 				} catch (Exception e1) {
